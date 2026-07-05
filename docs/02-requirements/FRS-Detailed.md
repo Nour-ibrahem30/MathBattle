@@ -1,4 +1,4 @@
-# Functional Requirements Specification — Detailed (FRS-Detailed) — MathQuest
+# Functional Requirements Specification — Detailed (FRS-Detailed) — MathBattle
 
 **Version:** 1.0.0
 **Status:** Approved for Engineering

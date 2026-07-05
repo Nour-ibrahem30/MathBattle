@@ -1,4 +1,4 @@
-# Entity-Relationship Design (ERD) — MathQuest
+# Entity-Relationship Design (ERD) — MathBattle
 
 **Version:** 1.0.0
 
@@ -6,7 +6,7 @@
 
 ## Purpose and Scope
 
-This document defines the data model for MathQuest Phase 1. It covers all entities, relationships, constraints, indexes, and deletion rules. The ERD is the single source of truth for database schema design.
+This document defines the data model for MathBattle Phase 1. It covers all entities, relationships, constraints, indexes, and deletion rules. The ERD is the single source of truth for database schema design.
 
 ---
 

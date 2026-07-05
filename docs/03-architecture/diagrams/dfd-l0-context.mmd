@@ -1,0 +1,28 @@
+flowchart TB
+    subgraph External ["External Entities"]
+        Student["Student"]
+        Teacher["Teacher"]
+        Admin["Administrator"]
+        AI["AI Provider"]
+        Email["Email Service"]
+        Storage["Cloud Storage"]
+    end
+
+    subgraph System ["MathBattle Platform"]
+        P0["0.0 MathBattle System"]
+    end
+
+    Student -->|"Credentials, answers, match actions"| P0
+    P0 -->|"Lessons, progress, match results"| Student
+
+    Teacher -->|"Questions, assignments"| P0
+    P0 -->|"Class analytics, AI drafts"| Teacher
+
+    Admin -->|"User management, settings"| P0
+    P0 -->|"Reports, audit data"| Admin
+
+    P0 -->|"Anonymized prompts"| AI
+    AI -->|"Generated content"| P0
+
+    P0 -->|"Send requests"| Email
+    P0 -->|"Upload/download files"| Storage

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Activity Center | MathQuest</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#fffbff",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed-variant": "#5a00c6",
+                    "tertiary-container": "#bc4800",
+                    "surface-container": "#ededf9",
+                    "tertiary": "#943700",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-background": "#191b23",
+                    "tertiary-fixed": "#ffdbcd",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#00174b",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#f0f0fb",
+                    "background": "#faf8ff",
+                    "on-surface-variant": "#434655",
+                    "primary": "#004ac6",
+                    "outline-variant": "#c3c6d7",
+                    "surface-variant": "#e1e2ed",
+                    "surface-container-highest": "#e1e2ed",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#d9d9e5",
+                    "surface-tint": "#0053db",
+                    "surface-container-low": "#f3f3fe",
+                    "primary-fixed": "#dbe1ff",
+                    "primary-container": "#2563eb",
+                    "outline": "#737686",
+                    "secondary-fixed-dim": "#d2bbff",
+                    "on-primary-container": "#eeefff",
+                    "on-tertiary-fixed": "#360f00",
+                    "on-error-container": "#93000a",
+                    "surface-container-high": "#e7e7f3",
+                    "on-error": "#ffffff",
+                    "inverse-primary": "#b4c5ff",
+                    "surface": "#faf8ff",
+                    "secondary": "#712ae2",
+                    "on-secondary-fixed": "#25005a",
+                    "surface-bright": "#faf8ff",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "secondary-fixed": "#eaddff",
+                    "on-tertiary-container": "#ffede6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "0.5rem",
+                    "gutter": "24px",
+                    "xl": "4rem",
+                    "sm": "1rem",
+                    "unit": "4px",
+                    "margin-desktop": "48px",
+                    "lg": "2.5rem",
+                    "md": "1.5rem",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Geist"],
+                    "headline-md": ["Inter"],
+                    "label-sm": ["Geist"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.015em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .nav-active {
+            @apply text-primary font-bold bg-surface-container-high rounded-lg;
+        }
+        /* Custom scrollbar for activity list */
+        .activity-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .activity-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .activity-scroll::-webkit-scrollbar-thumb {
+            @apply bg-outline-variant rounded-full;
+        }
+        .glass-header {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md overflow-x-hidden">
+<!-- Desktop Side Navigation (Anchored from JSON) -->
+<aside class="hidden md:flex h-screen w-64 fixed left-0 top-0 z-50 bg-surface-container-low flex-col p-sm gap-xs shadow-sm border-r border-outline-variant/30">
+<div class="flex items-center gap-sm px-xs py-md">
+<div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">functions</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-extrabold text-primary">MathQuest</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Academic Excellence</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-unit mt-md">
+<a class="flex items-center gap-sm px-md py-sm hover:bg-surface-container-high hover:text-primary transition-all duration-200 text-on-surface-variant rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm hover:bg-surface-container-high hover:text-primary transition-all duration-200 text-on-surface-variant rounded-lg" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-md text-label-md">Classes</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm hover:bg-surface-container-high hover:text-primary transition-all duration-200 text-on-surface-variant rounded-lg" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<!-- Active State Logic: Notification center implies engagement/missions or general dashboard, using placeholder active -->
+<a class="flex items-center gap-sm px-md py-sm bg-surface-container-high text-primary font-bold rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">rocket_launch</span>
+<span class="font-label-md text-label-md">Missions</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm hover:bg-surface-container-high hover:text-primary transition-all duration-200 text-on-surface-variant rounded-lg" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Students</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm hover:bg-surface-container-high hover:text-primary transition-all duration-200 text-on-surface-variant rounded-lg" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span class="font-label-md text-label-md">Reports</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-unit pt-md border-t border-outline-variant/20">
+<button class="w-full bg-primary-container text-on-primary-container font-bold py-sm rounded-xl mb-md hover:opacity-90 transition-all active:scale-[0.98]">
+                Create Mission
+            </button>
+<a class="flex items-center gap-sm px-md py-sm hover:bg-surface-container-high hover:text-primary transition-all duration-200 text-on-surface-variant rounded-lg" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm hover:bg-surface-container-high hover:text-primary transition-all duration-200 text-on-surface-variant rounded-lg" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="md:ml-64 min-h-screen flex flex-col">
+<!-- Top Navigation (Anchored from JSON) -->
+<header class="w-full sticky top-0 z-40 bg-surface/80 backdrop-blur-md shadow-sm">
+<div class="flex justify-between items-center px-gutter py-xs w-full max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-md">
+<span class="md:hidden font-headline-md text-headline-md font-bold text-primary">MathQuest</span>
+<div class="hidden md:flex items-center bg-surface-container-low px-sm py-xs rounded-full border border-outline-variant/30 min-w-[320px]">
+<span class="material-symbols-outlined text-outline">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-label-md w-full ml-xs" placeholder="Search activities..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex items-center gap-xs">
+<button class="p-xs hover:bg-surface-container-high rounded-full transition-colors relative">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full border-2 border-surface"></span>
+</button>
+<button class="p-xs hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">help</span>
+</button>
+<button class="p-xs hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+</button>
+</div>
+<div class="flex items-center gap-xs pl-md border-l border-outline-variant/30">
+<div class="text-right hidden sm:block">
+<p class="font-label-md text-label-md font-bold">Alex Chen</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Lvl 24 Arithmetician</p>
+</div>
+<img class="w-10 h-10 rounded-full border-2 border-primary-container object-cover" data-alt="A professional close-up headshot of a young student with a friendly expression, wearing a navy blue hoodie, set against a soft-focus library background. The lighting is bright and natural, reflecting a modern academic environment with a crisp, high-fidelity aesthetic consistent with a premium educational platform like MathQuest." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsPTRn0D1NwJ14FPlu3A1mpNiGlXy8gaEpkU1m5TfTvNrJzt7Lnx68sh7pbOqvvkwk9qPt52v5qP5dUZPxJ5dqMgFmqCxpItxRMTwMWQWd61Nkb8dDib0pcMj8zBmnMiP9K5ifYvFF83wkhh1ZRj_OvwvfgMT5OAZ65iYzOIXuB2v5ZxcO1J0Ro-4U1BABpiorpmoC2guGH6ggzxvy1LQ97WtQBmWz-YrBbOEp5Ns7AEAaM7Jj4pTLNxYFgBJj-sg99cvQ5LgiLw"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Notification Center Content -->
+<div class="flex-1 px-gutter py-lg max-w-5xl mx-auto w-full">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-md mb-lg">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-background">Activity Center</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Stay updated with your learning journey and peer interactions.</p>
+</div>
+<div class="flex items-center gap-sm">
+<button class="flex items-center gap-xs px-md py-sm text-primary font-label-md border border-primary/20 rounded-lg hover:bg-primary-fixed/30 transition-all active:scale-95">
+<span class="material-symbols-outlined text-[18px]">done_all</span>
+                        Mark all as read
+                    </button>
+<button class="flex items-center gap-xs px-md py-sm bg-surface-container-high text-on-surface font-label-md rounded-lg hover:bg-surface-container-highest transition-all active:scale-95">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+                        Preferences
+                    </button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-md">
+<!-- Filters/Categories Sidebar (Asymmetric Layout) -->
+<div class="lg:col-span-3 space-y-md">
+<div class="bg-white rounded-xl p-md border border-outline-variant/30 shadow-sm">
+<p class="font-label-sm text-label-sm text-outline uppercase tracking-wider mb-sm">Categories</p>
+<div class="flex flex-col gap-unit">
+<button class="flex items-center justify-between w-full p-sm bg-primary/10 text-primary font-bold rounded-lg group">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined">all_inclusive</span>
+<span class="font-label-md">All Activity</span>
+</div>
+<span class="bg-primary text-on-primary text-[10px] px-xs rounded-full">12</span>
+</button>
+<button class="flex items-center justify-between w-full p-sm hover:bg-surface-container-low text-on-surface-variant rounded-lg transition-all">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-md">Learning Updates</span>
+</div>
+<span class="text-label-sm">4</span>
+</button>
+<button class="flex items-center justify-between w-full p-sm hover:bg-surface-container-low text-on-surface-variant rounded-lg transition-all">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined">swords</span>
+<span class="font-label-md">Invites</span>
+</div>
+<span class="text-label-sm">3</span>
+</button>
+<button class="flex items-center justify-between w-full p-sm hover:bg-surface-container-low text-on-surface-variant rounded-lg transition-all">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined">military_tech</span>
+<span class="font-label-md">Achievements</span>
+</div>
+<span class="text-label-sm">5</span>
+</button>
+</div>
+</div>
+<!-- Achievement Summary Card -->
+<div class="bg-secondary text-on-secondary rounded-xl p-md shadow-lg overflow-hidden relative group">
+<div class="absolute -right-4 -bottom-4 opacity-20 transform group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1;">trophy</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-xs">Level Up!</h4>
+<p class="font-label-sm text-label-sm opacity-90 mb-md">You're 240XP away from the 'Quantum Master' title.</p>
+<div class="w-full bg-white/20 h-2 rounded-full mb-sm">
+<div class="bg-white h-full rounded-full" style="width: 75%"></div>
+</div>
+<button class="w-full bg-white text-secondary py-xs rounded-lg font-bold text-label-md">View Journey</button>
+</div>
+</div>
+<!-- Main Activity List -->
+<div class="lg:col-span-9">
+<div class="bg-white rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden flex flex-col h-[700px]">
+<div class="p-md border-b border-outline-variant/30 flex items-center justify-between glass-header sticky top-0 z-10 bg-white/90">
+<div class="flex gap-md">
+<button class="font-label-md text-primary border-b-2 border-primary pb-xs">Latest</button>
+<button class="font-label-md text-on-surface-variant pb-xs hover:text-primary transition-colors">Unread</button>
+<button class="font-label-md text-on-surface-variant pb-xs hover:text-primary transition-colors">Archived</button>
+</div>
+</div>
+<div class="activity-scroll flex-1 overflow-y-auto">
+<!-- Learning Update Item -->
+<div class="p-md hover:bg-surface-container-low border-b border-outline-variant/20 transition-all cursor-pointer group flex items-start gap-md">
+<div class="w-12 h-12 flex-shrink-0 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">menu_book</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-unit">
+<h3 class="font-bold text-body-md text-on-surface group-hover:text-primary transition-colors">New Lesson: Advanced Calculus Strategies</h3>
+<span class="text-label-sm text-outline">2 min ago</span>
+</div>
+<p class="text-on-surface-variant text-label-md mb-sm">Module 4 is now available. Master the integration by parts with our new AI-guided tutorial.</p>
+<div class="flex gap-sm">
+<button class="px-md py-xs bg-primary text-on-primary rounded-lg text-label-sm font-bold shadow-sm active:scale-95 transition-transform">Start Now</button>
+<button class="px-md py-xs border border-outline-variant text-on-surface-variant rounded-lg text-label-sm font-bold hover:bg-surface transition-colors">Details</button>
+</div>
+</div>
+<div class="w-2 h-2 rounded-full bg-primary mt-xs"></div>
+</div>
+<!-- Multiplayer Invite Item -->
+<div class="p-md hover:bg-surface-container-low border-b border-outline-variant/20 transition-all cursor-pointer group flex items-start gap-md">
+<div class="w-12 h-12 flex-shrink-0 bg-secondary/10 rounded-xl flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">swords</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-unit">
+<h3 class="font-bold text-body-md text-on-surface group-hover:text-secondary transition-colors">Multiplayer Duel: Challenge from @SymmetryKing</h3>
+<span class="text-label-sm text-outline">15 min ago</span>
+</div>
+<p class="text-on-surface-variant text-label-md mb-sm">Join the 1v1 Arena for a speed-solving match in Linear Algebra. Winner gains +50 LP.</p>
+<div class="flex gap-sm">
+<button class="px-md py-xs bg-secondary text-on-secondary rounded-lg text-label-sm font-bold shadow-sm active:scale-95 transition-transform">Accept Duel</button>
+<button class="px-md py-xs border border-outline-variant text-on-surface-variant rounded-lg text-label-sm font-bold hover:bg-surface transition-colors">Decline</button>
+</div>
+</div>
+<div class="w-2 h-2 rounded-full bg-secondary mt-xs"></div>
+</div>
+<!-- Achievement Item -->
+<div class="p-md hover:bg-surface-container-low border-b border-outline-variant/20 transition-all cursor-pointer group flex items-start gap-md bg-tertiary-fixed/10">
+<div class="w-12 h-12 flex-shrink-0 bg-tertiary/10 rounded-xl flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-unit">
+<h3 class="font-bold text-body-md text-on-surface">Badge Unlocked: Polynomial Prodigy</h3>
+<span class="text-label-sm text-outline">1 hour ago</span>
+</div>
+<p class="text-on-surface-variant text-label-md">You've solved 50 consecutive algebra problems without using a hint! Your rank has increased to Platinum.</p>
+</div>
+<div class="w-2 h-2 rounded-full bg-tertiary mt-xs"></div>
+</div>
+<!-- Another Learning Update -->
+<div class="p-md hover:bg-surface-container-low border-b border-outline-variant/20 transition-all cursor-pointer group flex items-start gap-md opacity-70">
+<div class="w-12 h-12 flex-shrink-0 bg-surface-container-highest rounded-xl flex items-center justify-center text-outline">
+<span class="material-symbols-outlined">assignment</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-unit">
+<h3 class="font-bold text-body-md text-on-surface">Weekly Report Ready</h3>
+<span class="text-label-sm text-outline">Yesterday</span>
+</div>
+<p class="text-on-surface-variant text-label-md">Your progress report for the 'Matrices & Vectors' mission is now available for review.</p>
+</div>
+</div>
+<!-- Multiplayer Result -->
+<div class="p-md hover:bg-surface-container-low border-b border-outline-variant/20 transition-all cursor-pointer group flex items-start gap-md opacity-70">
+<div class="w-12 h-12 flex-shrink-0 bg-surface-container-highest rounded-xl flex items-center justify-center text-outline">
+<span class="material-symbols-outlined">emoji_events</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-unit">
+<h3 class="font-bold text-body-md text-on-surface">Duel Victory!</h3>
+<span class="text-label-sm text-outline">2 days ago</span>
+</div>
+<p class="text-on-surface-variant text-label-md">You defeated @CalcWizard in a speed duel! +25 LP and a winning streak bonus awarded.</p>
+</div>
+</div>
+<!-- Achievement Item -->
+<div class="p-md hover:bg-surface-container-low transition-all cursor-pointer group flex items-start gap-md opacity-70">
+<div class="w-12 h-12 flex-shrink-0 bg-surface-container-highest rounded-xl flex items-center justify-center text-outline">
+<span class="material-symbols-outlined">verified</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-unit">
+<h3 class="font-bold text-body-md text-on-surface">Streak Maintained: 15 Days</h3>
+<span class="text-label-sm text-outline">3 days ago</span>
+</div>
+<p class="text-on-surface-variant text-label-md">Consistency is key! You've maintained your daily mission streak. Keep it up!</p>
+</div>
+</div>
+</div>
+<!-- Footer pagination/load more -->
+<div class="p-sm bg-surface-container-low text-center">
+<button class="font-label-sm text-label-sm text-primary font-bold hover:underline">View All History</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Navigation Bar (Anchored from JSON Policy) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface/80 backdrop-blur-md border-t border-outline-variant/20 z-50 px-sm py-xs flex justify-around items-center">
+<a class="flex flex-col items-center gap-unit text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center gap-unit text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-[10px] font-label-sm">Classes</span>
+</a>
+<a class="flex flex-col items-center gap-unit text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+<span class="text-[10px] font-label-sm font-bold">Missions</span>
+</a>
+<a class="flex flex-col items-center gap-unit text-on-surface-variant relative" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-1.5 h-1.5 bg-error rounded-full"></span>
+<span class="text-[10px] font-label-sm">Activity</span>
+</a>
+<a class="flex flex-col items-center gap-unit text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-label-sm">Profile</span>
+</a>
+</nav>
+<!-- Micro-interactions Script -->
+<script>
+        // Simple micro-interaction for notification items
+        document.querySelectorAll('.activity-scroll > div').forEach(item => {
+            item.addEventListener('click', () => {
+                const unreadIndicator = item.querySelector('.w-2.h-2');
+                if (unreadIndicator) {
+                    unreadIndicator.style.opacity = '0';
+                    item.style.backgroundColor = 'transparent';
+                    item.classList.add('opacity-70');
+                }
+            });
+        });
+
+        // "Mark all as read" logic
+        document.querySelector('button:contains("Mark all as read")')?.addEventListener('click', () => {
+            document.querySelectorAll('.w-2.h-2').forEach(indicator => {
+                indicator.style.opacity = '0';
+            });
+            document.querySelectorAll('.activity-scroll > div').forEach(item => {
+                item.classList.add('opacity-70');
+            });
+        });
+
+        // Add a pulsing effect to new notification icons
+        const notificationDot = document.querySelector('.absolute.top-1.right-1');
+        if (notificationDot) {
+            setInterval(() => {
+                notificationDot.classList.toggle('scale-125');
+            }, 1000);
+        }
+    </script>
+</body></html>

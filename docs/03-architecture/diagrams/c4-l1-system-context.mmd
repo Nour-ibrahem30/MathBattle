@@ -1,0 +1,22 @@
+flowchart TB
+    subgraph Users ["Users"]
+        Student["Student (K-12 Learner)"]
+        Teacher["Teacher (Educator)"]
+        Admin["Administrator (School/District)"]
+    end
+
+    Platform["MathBattle Web Platform\n(Modular Monolith + WebSocket Server)"]
+
+    subgraph External ["External Services"]
+        AI["AI Provider (OpenAI/Anthropic)"]
+        Email["Email Service (SendGrid/Postmark)"]
+        Storage["Cloud Storage (S3/GCS)"]
+    end
+
+    Student -->|Practices & plays matches| Platform
+    Teacher -->|Creates assignments & reviews content| Platform
+    Admin -->|Manages users & views reports| Platform
+
+    Platform -->|Generates questions & analyzes weaknesses| AI
+    Platform -->|Sends transactional emails| Email
+    Platform -->|Stores uploads & exports| Storage

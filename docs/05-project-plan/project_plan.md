@@ -1,4 +1,4 @@
-# Project Plan — MathQuest
+# Project Plan — MathBattle
 
 **Version:** 1.0.0
 
@@ -6,7 +6,7 @@
 
 ## Project Overview
 
-MathQuest is an AI-powered educational SaaS web platform. This project plan covers Phase 1 (MVP) delivery over 12 weeks (3 months), targeting a pilot school launch.
+MathBattle is an AI-powered educational SaaS web platform. This project plan covers Phase 1 (MVP) delivery over 12 weeks (3 months), targeting a pilot school launch.
 
 ---
 

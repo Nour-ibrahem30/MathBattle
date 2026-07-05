@@ -1,8 +1,8 @@
-# Product Vision — MathQuest
+# Product Vision — MathBattle
 
 ## Product Promise
 
-MathQuest makes mathematics learning measurably more effective by combining AI-driven personalization with curriculum-aligned gamification — giving every student a learning path that adapts to their pace, every teacher actionable insight into their class, and every school a platform that proves learning outcomes.
+MathBattle makes mathematics learning measurably more effective by combining AI-driven personalization with curriculum-aligned gamification — giving every student a learning path that adapts to their pace, every teacher actionable insight into their class, and every school a platform that proves learning outcomes.
 
 ---
 
@@ -19,7 +19,7 @@ MathQuest makes mathematics learning measurably more effective by combining AI-d
 
 ## Differentiation
 
-| Dimension | MathQuest Position |
+| Dimension | MathBattle Position |
 |---|---|
 | vs. pure gamification platforms | Curriculum-first; gamification is a motivational layer, not the product |
 | vs. static question banks | AI generates, imports, deduplicates, and difficulty-calibrates questions dynamically |
@@ -54,7 +54,7 @@ MathQuest makes mathematics learning measurably more effective by combining AI-d
 ## Long-Term Direction
 
 ### 3-Year Vision
-MathQuest becomes the default mathematics practice platform for K–12 institutions, recognized for measurable learning outcomes, trusted AI tooling for teachers, and a student experience that makes mathematics genuinely engaging.
+MathBattle becomes the default mathematics practice platform for K–12 institutions, recognized for measurable learning outcomes, trusted AI tooling for teachers, and a student experience that makes mathematics genuinely engaging.
 
 ### Platform Expansion Path
 - Phase 1: Web platform for mathematics (K–12)
@@ -72,7 +72,7 @@ MathQuest becomes the default mathematics practice platform for K–12 instituti
 
 ---
 
-## What MathQuest Is Not
+## What MathBattle Is Not
 
 - Not a replacement for classroom instruction
 - Not a social network or general-purpose learning platform

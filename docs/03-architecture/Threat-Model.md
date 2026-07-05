@@ -1,4 +1,4 @@
-# Threat Model — MathQuest
+# Threat Model — MathBattle
 
 **Version:** 1.0.0
 **Method:** STRIDE
@@ -113,7 +113,7 @@ The threat model covers: Web Frontend, REST API, WebSocket Match Server, AI Work
 
 ## OWASP Top 10 Mapping
 
-| OWASP Risk | MathQuest Mitigation |
+| OWASP Risk | MathBattle Mitigation |
 |---|---|
 | A01: Broken Access Control | RBAC on every endpoint; school-scope validation; default deny |
 | A02: Cryptographic Failures | TLS 1.2+; AES-256 at rest; bcrypt passwords; RS256 JWT |

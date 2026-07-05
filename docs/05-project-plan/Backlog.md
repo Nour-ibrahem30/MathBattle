@@ -1,4 +1,4 @@
-# Backlog — MathQuest
+# Backlog — MathBattle
 
 **Version:** 1.0.0
 

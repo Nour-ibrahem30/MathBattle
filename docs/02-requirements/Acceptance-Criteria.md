@@ -1,4 +1,4 @@
-# Acceptance Criteria — MathQuest
+# Acceptance Criteria — MathBattle
 
 **Version:** 1.0.0
 

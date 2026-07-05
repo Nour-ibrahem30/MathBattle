@@ -1,4 +1,4 @@
-# Deployment and Operations — MathQuest
+# Deployment and Operations — MathBattle
 
 **Version:** 1.0.0
 

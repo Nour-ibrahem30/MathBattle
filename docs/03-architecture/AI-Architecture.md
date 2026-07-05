@@ -1,4 +1,4 @@
-# AI Architecture — MathQuest
+# AI Architecture — MathBattle
 
 **Version:** 1.0.0
 
@@ -6,7 +6,7 @@
 
 ## Purpose
 
-This document defines the architecture of the MathQuest AI engine, including question generation, weakness analysis, difficulty estimation, duplicate detection, and personalized recommendations. The AI engine is an assistant to teachers and students — it does not make autonomous decisions about student learning without human oversight.
+This document defines the architecture of the MathBattle AI engine, including question generation, weakness analysis, difficulty estimation, duplicate detection, and personalized recommendations. The AI engine is an assistant to teachers and students — it does not make autonomous decisions about student learning without human oversight.
 
 ---
 

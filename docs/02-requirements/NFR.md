@@ -1,4 +1,4 @@
-# Non-Functional Requirements (NFR) — MathQuest
+# Non-Functional Requirements (NFR) — MathBattle
 
 **Version:** 1.0.0
 **Note:** This is the short quality reference. See `NFR-Detailed.md` for full specifications.
@@ -6,7 +6,7 @@
 ---
 
 ## Purpose
-Define the quality attributes that MathQuest must meet across all phases. These requirements are non-negotiable for launch unless explicitly deferred with documented justification.
+Define the quality attributes that MathBattle must meet across all phases. These requirements are non-negotiable for launch unless explicitly deferred with documented justification.
 
 ## Scope
 All platform components: web frontend, REST API, WebSocket server, AI engine, background jobs, database, and infrastructure.

@@ -1,0 +1,360 @@
+openapi: 3.1.0
+info:
+  title: MathBattle REST API
+  description: REST API contract for the MathBattle K-12 gamified learning platform.
+  version: 1.0.0
+servers:
+  - url: https://api.mathbattle.io/api/v1
+    description: Production Environment
+  - url: https://api.staging.mathbattle.io/api/v1
+    description: Staging Environment
+  - url: http://localhost:3000/api/v1
+    description: Local Development Environment
+
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      description: Creates a student, teacher, or administrator account.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - email
+                - password
+                - role
+              properties:
+                username:
+                  type: string
+                  example: learner123
+                email:
+                  type: string
+                  format: email
+                  example: student@school.edu
+                password:
+                  type: string
+                  format: password
+                  example: securePassword123
+                role:
+                  type: string
+                  enum: [student, teacher, admin]
+                  example: student
+                school_id:
+                  type: string
+                  format: uuid
+                  example: 123e4567-e89b-12d3-a456-426614174000
+      responses:
+        '201':
+          description: User registered successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessEnvelope'
+        '400':
+          description: Invalid request parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+
+  /auth/login:
+    post:
+      summary: User login
+      description: Authenticates user credentials and returns access and refresh JWTs.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: student@school.edu
+                password:
+                  type: string
+                  format: password
+                  example: securePassword123
+      responses:
+        '200':
+          description: Authentication successful.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      accessToken:
+                        type: string
+                        example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+                      refreshToken:
+                        type: string
+                        example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                          username:
+                            type: string
+                          role:
+                            type: string
+                  meta:
+                    $ref: '#/components/schemas/MetaEnvelope'
+        '401':
+          description: Invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+
+  /learning/paths:
+    get:
+      summary: List learning paths
+      description: Returns curriculum-aligned learning paths filtered by grade.
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: grade
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 12
+            example: 5
+      responses:
+        '200':
+          description: A list of learning paths.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        grade:
+                          type: integer
+                  meta:
+                    $ref: '#/components/schemas/MetaEnvelope'
+
+  /questions:
+    get:
+      summary: List questions
+      description: Retrieve questions from the question bank. Teachers see all questions, students see published ones.
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: grade
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [draft, review, published, archived]
+      responses:
+        '200':
+          description: Question list retrieved.
+        '403':
+          description: Insufficient permissions.
+
+    post:
+      summary: Create a question
+      description: Allows a teacher to manually add a new question to their school's bank.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - question_text
+                - options
+                - correct_answer
+                - grade
+              properties:
+                question_text:
+                  type: string
+                options:
+                  type: array
+                  items:
+                    type: string
+                correct_answer:
+                  type: string
+                grade:
+                  type: integer
+      responses:
+        '201':
+          description: Question created.
+
+  /ai/generate-questions:
+    post:
+      summary: Generate questions using AI
+      description: Asynchronous operation triggered by teachers to generate questions from curriculum prompts.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - prompt
+                - count
+                - grade
+              properties:
+                prompt:
+                  type: string
+                  example: Multi-digit multiplication word problems
+                count:
+                  type: integer
+                  minimum: 1
+                  maximum: 20
+                  default: 5
+                grade:
+                  type: integer
+                  example: 4
+      responses:
+        '202':
+          description: Generation job accepted and queued.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      job_id:
+                        type: string
+                        format: uuid
+                        example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+                      status:
+                        type: string
+                        example: queued
+                  meta:
+                    $ref: '#/components/schemas/MetaEnvelope'
+
+  /matches:
+    post:
+      summary: Create or search for a 1v1 match
+      description: Registers a student for matchmaking or directly challenges another student.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - game_mode
+              properties:
+                game_mode:
+                  type: string
+                  enum: [ranked, casual, challenge]
+                  example: ranked
+                opponent_id:
+                  type: string
+                  format: uuid
+                  description: Required only if game_mode is challenge.
+      responses:
+        '201':
+          description: Match setup created or player added to queue.
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    SuccessEnvelope:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            success:
+              type: boolean
+              example: true
+        meta:
+          $ref: '#/components/schemas/MetaEnvelope'
+
+    MetaEnvelope:
+      type: object
+      properties:
+        request_id:
+          type: string
+          format: uuid
+          example: fca7b282-3d84-482a-a92c-ebf5f7f3a8b4
+        timestamp:
+          type: string
+          format: date-time
+          example: 2026-07-04T22:00:00Z
+
+    ProblemDetails:
+      type: object
+      required:
+        - type
+        - title
+        - status
+        - detail
+      properties:
+        type:
+          type: string
+          format: uri
+          example: https://api.mathbattle.io/errors/validation-error
+        title:
+          type: string
+          example: Validation Error
+        status:
+          type: integer
+          example: 400
+        detail:
+          type: string
+          example: One or more fields failed validation.
+        instance:
+          type: string
+          example: /api/v1/questions
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              message:
+                type: string
+        request_id:
+          type: string
+          format: uuid

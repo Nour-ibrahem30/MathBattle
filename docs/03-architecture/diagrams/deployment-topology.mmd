@@ -1,0 +1,43 @@
+flowchart TB
+    subgraph Users ["Users"]
+        Browser["Browser / CDN"]
+    end
+
+    subgraph AWS ["AWS Cloud"]
+        CF["CloudFront CDN"]
+        S3Static["S3: Static Assets"]
+        
+        subgraph ECS ["ECS Cluster"]
+            API["REST API\n(2+ tasks)"]
+            WS["WebSocket Server\n(2+ tasks)"]
+            Worker["AI Worker\n(1+ tasks)"]
+        end
+
+        RDS[("RDS PostgreSQL\nPrimary + Replica")]
+        ElastiCache[("ElastiCache Redis")]
+        S3Data["S3: Imports/Exports"]
+        Secrets["Secrets Manager"]
+    end
+
+    subgraph External ["External"]
+        AI["AI Provider"]
+        Email["Email Service"]
+    end
+
+    Browser --> CF
+    CF --> S3Static
+    Browser --> API
+    Browser --> WS
+
+    API --> RDS
+    API --> ElastiCache
+    API --> S3Data
+    API --> Secrets
+    API --> Email
+
+    WS --> RDS
+    WS --> ElastiCache
+
+    Worker --> ElastiCache
+    Worker --> RDS
+    Worker --> AI

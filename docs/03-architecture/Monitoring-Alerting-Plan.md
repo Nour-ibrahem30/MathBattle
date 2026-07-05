@@ -1,4 +1,4 @@
-# Monitoring and Alerting Plan — MathQuest
+# Monitoring and Alerting Plan — MathBattle
 
 **Version:** 1.0.0
 

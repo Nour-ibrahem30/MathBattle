@@ -1,4 +1,4 @@
-# Market Context — MathQuest
+# Market Context — MathBattle
 
 **Version:** 1.0.0
 
@@ -18,7 +18,7 @@ Key market drivers:
 
 ## Competitive Landscape
 
-| Competitor | Type | Strengths | Weaknesses vs. MathQuest |
+| Competitor | Type | Strengths | Weaknesses vs. MathBattle |
 |---|---|---|---|
 | Khan Academy | Free learning platform | Broad content library, trusted brand | No multiplayer, no teacher question bank, no AI generation |
 | Prodigy Math | Gamified math game | High student engagement | Game-first (not curriculum-first), limited teacher tools |
@@ -30,9 +30,9 @@ Key market drivers:
 
 ---
 
-## MathQuest Differentiation
+## MathBattle Differentiation
 
-MathQuest is the only platform that combines:
+MathBattle is the only platform that combines:
 1. Curriculum-aligned structured learning paths (not a game)
 2. AI-powered question generation and weakness detection
 3. Competitive multiplayer matches with educational scoring mechanics

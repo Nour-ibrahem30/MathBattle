@@ -1,4 +1,4 @@
-# Onboarding Guide — MathQuest Engineering
+# Onboarding Guide — MathBattle Engineering
 
 **Version:** 1.0.0
 
@@ -6,13 +6,13 @@
 
 ## Project Overview
 
-MathQuest is an AI-powered educational SaaS web platform for K–12 mathematics learning. It serves students, teachers, and administrators through a single responsive web application. This guide gets a new engineer from zero to their first PR in one day.
+MathBattle is an AI-powered educational SaaS web platform for K–12 mathematics learning. It serves students, teachers, and administrators through a single responsive web application. This guide gets a new engineer from zero to their first PR in one day.
 
 ---
 
 ## Before Day One
 
-- [ ] GitHub access granted (repo: `mathquest/platform`)
+- [ ] GitHub access granted (repo: `mathbattle/platform`)
 - [ ] AWS account access (staging environment)
 - [ ] Slack workspace access (#engineering, #alerts, #releases)
 - [ ] Secrets manager access (staging secrets only)
@@ -23,7 +23,7 @@ MathQuest is an AI-powered educational SaaS web platform for K–12 mathematics 
 
 ## Required Background Reading (in order)
 
-1. `docs/01-product/Executive-Summary.md` — What MathQuest is
+1. `docs/01-product/Executive-Summary.md` — What MathBattle is
 2. `docs/01-product/PRD.md` — What we are building
 3. `docs/03-architecture/System-Architecture.md` — How it is built
 4. `docs/03-architecture/ERD.md` — Data model
@@ -54,7 +54,7 @@ MathQuest is an AI-powered educational SaaS web platform for K–12 mathematics 
 ## Repository Structure
 
 ```
-mathquest/
+mathbattle/
   src/
     modules/          ← Feature modules (auth, learning, questions, ai, matches, gamification, dashboard, admin, notifications)
     shared/           ← Guards, pipes, filters, decorators, utils
@@ -87,7 +87,7 @@ mathquest/
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/mathquest/platform.git
+git clone https://github.com/mathbattle/platform.git
 cd platform
 
 # 2. Copy environment file

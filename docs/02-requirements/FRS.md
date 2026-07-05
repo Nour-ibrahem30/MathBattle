@@ -1,4 +1,4 @@
-# Functional Requirements Specification (FRS) — MathQuest
+# Functional Requirements Specification (FRS) — MathBattle
 
 **Version:** 1.0.0
 **Note:** This is the short implementation reference. See `FRS-Detailed.md` for full function specifications.
@@ -7,7 +7,7 @@
 
 ## 1. Document Overview
 
-This document defines the functional requirements for MathQuest Phase 1 (MVP). It covers all user-facing and system functions required for launch. Each function is traceable to a business rule in `BRS.md` and an acceptance criterion in `Acceptance-Criteria.md`.
+This document defines the functional requirements for MathBattle Phase 1 (MVP). It covers all user-facing and system functions required for launch. Each function is traceable to a business rule in `BRS.md` and an acceptance criterion in `Acceptance-Criteria.md`.
 
 ---
 

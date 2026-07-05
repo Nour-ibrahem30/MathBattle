@@ -1,0 +1,26 @@
+import { Navigate, Outlet } from 'react-router-dom';
+import { useAppStore } from '@/stores/appStore';
+import { getDefaultRoute } from '@/config/navigation';
+import type { UserRole } from '@/types';
+
+export function ProtectedRoute({ roles }: { roles?: UserRole[] }) {
+  const user = useAppStore((s) => s.user);
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (roles && !roles.includes(user.role)) {
+    return <Navigate to={getDefaultRoute(user.role)} replace />;
+  }
+
+  return <Outlet />;
+}
+
+export function GuestRoute() {
+  const user = useAppStore((s) => s.user);
+  if (user) {
+    return <Navigate to={getDefaultRoute(user.role)} replace />;
+  }
+  return <Outlet />;
+}

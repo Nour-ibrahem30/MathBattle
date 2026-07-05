@@ -1,4 +1,4 @@
-# Authentication and Security — MathQuest
+# Authentication and Security — MathBattle
 
 **Version:** 1.0.0
 
@@ -6,7 +6,7 @@
 
 ## Scope
 
-This document covers authentication flows, session security, RBAC model, endpoint authorization, anti-cheat, and security testing requirements for MathQuest.
+This document covers authentication flows, session security, RBAC model, endpoint authorization, anti-cheat, and security testing requirements for MathBattle.
 
 ---
 
@@ -23,7 +23,7 @@ This document covers authentication flows, session security, RBAC model, endpoin
 
 ## Authentication Decision
 
-MathQuest uses **JWT (JSON Web Tokens)** with a **refresh token rotation** pattern.
+MathBattle uses **JWT (JSON Web Tokens)** with a **refresh token rotation** pattern.
 
 - Access token: short-lived (15 minutes), stateless, signed with RS256
 - Refresh token: long-lived (30 days), stored as a hash in the database, rotated on every use

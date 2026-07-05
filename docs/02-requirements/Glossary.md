@@ -1,4 +1,4 @@
-# Glossary — MathQuest
+# Glossary — MathBattle
 
 **Version:** 1.0.0
 
@@ -62,7 +62,7 @@
 
 ## G
 
-**Gamification** — The application of game mechanics (XP, ranks, achievements, missions, streaks, leaderboards, tournaments) within learning activities to motivate continued engagement. Gamification in MathQuest is always secondary to educational outcomes.
+**Gamification** — The application of game mechanics (XP, ranks, achievements, missions, streaks, leaderboards, tournaments) within learning activities to motivate continued engagement. Gamification in MathBattle is always secondary to educational outcomes.
 
 **Grade** — The academic year level of a student (1–12). Used to scope learning paths, question bank content, and match pairing.
 

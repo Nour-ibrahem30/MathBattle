@@ -1,0 +1,50 @@
+flowchart TB
+    subgraph External ["External Entities"]
+        Student["Student"]
+        Teacher["Teacher"]
+        Admin["Administrator"]
+        AI["AI Provider"]
+        Email["Email Service"]
+        Storage["Cloud Storage"]
+    end
+
+    subgraph Platform ["MathBattle Platform Processes"]
+        P1["1.0 Authenticate"]
+        P2["2.0 Manage Learning"]
+        P3["3.0 Manage Questions"]
+        P4["4.0 Run Matches"]
+        P5["5.0 Gamify"]
+        P6["6.0 Process AI Jobs"]
+        P7["7.0 Notify"]
+        P8["8.0 Audit"]
+    end
+
+    subgraph Stores ["Data Stores"]
+        D1[("D1: PostgreSQL")]
+        D2[("D2: Redis")]
+    end
+
+    Student --> P1
+    Student --> P2
+    Student --> P4
+    Teacher --> P1
+    Teacher --> P3
+    Admin --> P1
+    Admin --> P8
+
+    P1 --> D1
+    P2 --> D1
+    P3 --> D1
+    P4 --> D1
+    P4 --> D2
+    P5 --> D1
+    P6 --> D1
+    P6 --> AI
+    P7 --> D1
+    P8 --> D1
+
+    P3 --> P6
+    P2 --> P5
+    P4 --> P5
+    P5 --> P7
+    P1 --> Email

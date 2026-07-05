@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MathQuest | Sign In</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#ffede6",
+                    "surface-container-low": "#f3f3fe",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "error": "#ba1a1a",
+                    "surface-container-highest": "#e1e2ed",
+                    "primary-fixed": "#dbe1ff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-high": "#e7e7f3",
+                    "tertiary": "#943700",
+                    "on-secondary-fixed-variant": "#5a00c6",
+                    "on-tertiary-fixed": "#360f00",
+                    "on-surface": "#191b23",
+                    "background": "#faf8ff",
+                    "surface-tint": "#0053db",
+                    "tertiary-container": "#bc4800",
+                    "on-secondary-container": "#fffbff",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "on-primary": "#ffffff",
+                    "on-primary-container": "#eeefff",
+                    "secondary-fixed-dim": "#d2bbff",
+                    "outline-variant": "#c3c6d7",
+                    "inverse-primary": "#b4c5ff",
+                    "on-surface-variant": "#434655",
+                    "primary": "#004ac6",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "secondary-fixed": "#eaddff",
+                    "surface-container": "#ededf9",
+                    "surface-bright": "#faf8ff",
+                    "on-background": "#191b23",
+                    "inverse-on-surface": "#f0f0fb",
+                    "surface-variant": "#e1e2ed",
+                    "surface-dim": "#d9d9e5",
+                    "secondary": "#712ae2",
+                    "on-secondary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-tertiary": "#ffffff",
+                    "outline": "#737686",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed": "#ffdbcd",
+                    "secondary-container": "#8a4cfc",
+                    "inverse-surface": "#2e3039",
+                    "surface": "#faf8ff",
+                    "on-primary-fixed": "#00174b",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#25005a",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "primary-container": "#2563eb"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "margin-desktop": "48px",
+                    "md": "1.5rem",
+                    "lg": "2.5rem",
+                    "gutter": "24px",
+                    "xs": "0.5rem",
+                    "sm": "1rem",
+                    "xl": "4rem",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "label-md": ["Geist"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["Geist"],
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-xl": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        
+        .floating-label-group {
+            position: relative;
+        }
+        .floating-label-group input:focus ~ label,
+        .floating-label-group input:not(:placeholder-shown) ~ label {
+            top: -10px;
+            left: 10px;
+            font-size: 12px;
+            color: #004ac6;
+            background: white;
+            padding: 0 4px;
+        }
+        .floating-label-group label {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            transition: all 0.2s ease;
+            pointer-events: none;
+            color: #737686;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-background font-body-md text-on-surface antialiased overflow-hidden">
+<main class="flex min-h-screen">
+<!-- Left Side: Illustrative Graphic -->
+<section class="hidden lg:flex lg:w-1/2 relative bg-primary items-center justify-center overflow-hidden">
+<!-- Background Decoration -->
+<div class="absolute inset-0 z-0">
+<div class="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-secondary/20 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-tertiary/20 rounded-full blur-[120px]"></div>
+</div>
+<!-- Content Overlay -->
+<div class="relative z-10 p-xl flex flex-col items-center text-center">
+<div class="animate-float mb-lg">
+<div class="w-64 h-64 rounded-[2rem] glass-panel flex items-center justify-center relative shadow-2xl">
+<div class="absolute -top-6 -right-6 w-24 h-24 bg-primary-container rounded-xl flex items-center justify-center shadow-lg transform rotate-12">
+<span class="material-symbols-outlined text-white text-[48px]">function</span>
+</div>
+<div class="absolute -bottom-4 -left-8 w-20 h-20 bg-secondary-container rounded-full flex items-center justify-center shadow-lg transform -rotate-12">
+<span class="material-symbols-outlined text-white text-[40px]">psychology</span>
+</div>
+<div class="w-full h-full p-md overflow-hidden rounded-[2rem]">
+<img class="w-full h-full object-contain rounded-xl" data-alt="A sophisticated 3D isometric illustration of a floating crystalline structure composed of geometric mathematical shapes like pyramids and spheres. The object is rendered with a pearlescent, translucent texture that catches light in shades of deep blue and violet. Soft, ethereal glows emanate from the junctions where lines meet, representing AI neural connections. The overall aesthetic is ultra-modern, clean, and academic, set against a dark, saturated primary blue background with subtle bokeh light particles." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFk8b1p4WjEGs_6k6_lFydQMYvapwFQY0x6Qf3vSlNf7ZbR1y-KN_7CkRpj_dOpxIKN56aYkU5TdXoB4Fuy94Hrc4Qtp5EbUx7Ve3tbdmxqdljs_Ibj7wKfwIv5hGsGwHzMOunL9RsZxPks0BKXQFYeTyGTTcUJGTmAtaJRxF8WfXM1JQJ69kfor5zLjIdsjHUOc8yZ1gx0xIIc5UBaTOcyGSAn3B0SMVLPepPF-U_56iVebENvz5Vh8hgUUk61g8rcV7d0cmOuA"/>
+</div>
+</div>
+</div>
+<div class="max-w-md">
+<h1 class="font-headline-xl text-headline-xl text-white mb-sm">MathQuest</h1>
+<p class="font-body-lg text-body-lg text-on-primary/80">
+                        Unlock your mathematical potential with the world's most advanced AI-powered learning platform. 
+                    </p>
+</div>
+</div>
+<!-- Subtle Grid Pattern -->
+<div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 32px 32px;"></div>
+</section>
+<!-- Right Side: Login Form -->
+<section class="w-full lg:w-1/2 bg-surface flex items-center justify-center p-md sm:p-xl relative">
+<!-- Mobile Logo -->
+<div class="absolute top-sm left-sm lg:hidden flex items-center gap-xs">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm">functions</span>
+</div>
+<span class="font-headline-md text-headline-md text-primary font-bold">MathQuest</span>
+</div>
+<div class="w-full max-w-[440px]">
+<div class="mb-lg">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Welcome back</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Please enter your details to sign in to your account.</p>
+</div>
+<!-- Social Logins -->
+<div class="grid grid-cols-2 gap-sm mb-lg">
+<button class="flex items-center justify-center gap-xs border border-outline-variant rounded-xl py-sm hover:bg-surface-container-low transition-colors duration-200">
+<img alt="Google" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPZexo808GwjsIOAB0hZBfVni1H2Fr5uWRb_BQ8HwrEcsN-AtnfKY8St2VWlwjz7aU5D_AcZYV640BrCYrrgntT9mLfaAVEF0tL03dAyth9SqoBvrrRF3H2xSfpUy4BrS5JJitjukhduwQKl4s5TY3DUPkTXtniB-mXfPHXE7xvNTp6AZJRxUrMewB3ZccqYdxQ4zqVsC01ji1ISkOQ6qiHmIQWCfADRM6Ttb0Y2CNBDbRuVZPmnMMJ-uyFFLYE6nTrbn8FD-chg"/>
+<span class="font-label-md text-label-md">Google</span>
+</button>
+<button class="flex items-center justify-center gap-xs border border-outline-variant rounded-xl py-sm hover:bg-surface-container-low transition-colors duration-200">
+<span class="material-symbols-outlined text-[20px] mb-1" style="font-variation-settings: 'FILL' 1;">apps</span>
+<span class="font-label-md text-label-md">Apple</span>
+</button>
+</div>
+<div class="relative flex items-center mb-lg">
+<div class="flex-grow border-t border-outline-variant"></div>
+<span class="flex-shrink mx-4 text-label-sm font-label-sm text-outline uppercase tracking-wider">Or continue with</span>
+<div class="flex-grow border-t border-outline-variant"></div>
+</div>
+<!-- Main Form -->
+<form class="space-y-md">
+<div class="floating-label-group">
+<input class="w-full px-sm py-md bg-surface-container-low border border-outline-variant rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-200 font-body-md" id="email" placeholder=" " type="email"/>
+<label class="font-label-md" for="email">Email Address</label>
+</div>
+<div class="floating-label-group">
+<input class="w-full px-sm py-md bg-surface-container-low border border-outline-variant rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-200 font-body-md" id="password" placeholder=" " type="password"/>
+<label class="font-label-md" for="password">Password</label>
+<button class="absolute right-sm top-1/2 -translate-y-1/2 text-outline-variant hover:text-on-surface-variant" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+<div class="flex items-center justify-between py-xs">
+<label class="flex items-center gap-xs cursor-pointer group">
+<div class="relative">
+<input class="peer hidden" type="checkbox"/>
+<div class="w-5 h-5 border-2 border-outline-variant rounded group-hover:border-primary transition-colors peer-checked:bg-primary peer-checked:border-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[14px] opacity-0 peer-checked:opacity-100 transition-opacity">check</span>
+</div>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">Remember for 30 days</span>
+</label>
+<a class="font-label-md text-label-md text-primary hover:underline decoration-2 underline-offset-4" href="#">Forgot Password?</a>
+</div>
+<button class="w-full bg-primary-container text-white py-md rounded-xl font-headline-md shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-xs group" type="submit">
+                        Sign In
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</form>
+<!-- Footer Link -->
+<div class="mt-xl text-center">
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Don't have an account? 
+                        <a class="text-primary font-bold hover:underline decoration-2 underline-offset-4 ml-1" href="#">Sign Up</a>
+</p>
+</div>
+</div>
+<!-- Footer Small Print -->
+<div class="absolute bottom-md left-0 right-0 text-center px-md">
+<p class="font-label-sm text-label-sm text-outline-variant">
+                    By signing in, you agree to our <a class="underline hover:text-on-surface-variant" href="#">Terms of Service</a> and <a class="underline hover:text-on-surface-variant" href="#">Privacy Policy</a>.
+                </p>
+</div>
+</section>
+</main>
+<script>
+        // Simple Interaction Logic
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalContent = btn.innerHTML;
+            
+            btn.disabled = true;
+            btn.innerHTML = `
+                <div class="flex items-center gap-sm">
+                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Signing in...
+                </div>
+            `;
+
+            setTimeout(() => {
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+                // Add your redirect or logic here
+            }, 1500);
+        });
+
+        // Floating label enhancement
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.classList.add('is-focused');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.classList.remove('is-focused');
+            });
+        });
+    </script>
+</body></html>

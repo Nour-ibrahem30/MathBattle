@@ -1,4 +1,4 @@
-# Compliance Requirements — MathQuest
+# Compliance Requirements — MathBattle
 
 **Version:** 1.0.0
 **Note:** This document is a technical compliance reference. It does not constitute legal advice. Legal review is required before launch.

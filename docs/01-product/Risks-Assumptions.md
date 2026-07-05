@@ -1,4 +1,4 @@
-# Risks and Assumptions — MathQuest
+# Risks and Assumptions — MathBattle
 
 **Version:** 1.0.0
 

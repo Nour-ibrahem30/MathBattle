@@ -1,0 +1,24 @@
+flowchart TD
+    Start([Student opens app]) --> Login{Logged in?}
+    Login -->|No| LoginPage[Login / Register]
+    LoginPage --> Auth[Authenticate]
+    Auth --> Dashboard[Student Dashboard]
+
+    Login -->|Yes| Dashboard
+
+    Dashboard --> Learn[Browse Learning Path]
+    Dashboard --> Match[Match Lobby]
+    Dashboard --> Profile[Profile / Achievements]
+
+    Learn --> Unit[Select Unit]
+    Unit --> Lesson[Start Lesson]
+    Lesson --> Questions[Answer Questions]
+    Questions --> LessonResult[Lesson Complete + XP]
+    LessonResult --> Dashboard
+
+    Match --> FindOpponent[Find Same-Grade Opponent]
+    FindOpponent --> MatchArena[Play 1v1 Match]
+    MatchArena --> MatchResult[Match Result + XP]
+    MatchResult --> Dashboard
+
+    Profile --> Dashboard

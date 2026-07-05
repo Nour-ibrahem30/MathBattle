@@ -1,4 +1,4 @@
-# Success Metrics — MathQuest
+# Success Metrics — MathBattle
 
 **Version:** 1.0.0
 

@@ -1,0 +1,25 @@
+sequenceDiagram
+    participant P as Provider (Stripe/Clever)
+    participant G as API Gateway
+    participant A as REST API
+    participant Q as BullMQ Queue
+    participant W as Webhook Worker
+    participant D as PostgreSQL
+
+    P->>G: POST /webhooks/{provider}
+    G->>A: Forward request
+    A->>A: Verify HMAC signature
+    A->>A: Validate timestamp (< 5 min)
+    A->>D: Check idempotency (provider, event_id)
+    alt Duplicate event
+        D-->>A: Already processed
+        A-->>P: 200 OK
+    else New event
+        A->>D: INSERT webhook_events (unprocessed)
+        A->>Q: Enqueue process_webhook job
+        A-->>P: 200 OK
+        Q->>W: Consume job
+        W->>D: Load webhook_event
+        W->>W: Process event (business logic)
+        W->>D: SET processed_at
+    end

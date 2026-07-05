@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth antialiased;
+  }
+
+  body {
+    @apply bg-background font-sans text-on-surface text-body-md;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+  }
+
+  .dark body {
+    @apply bg-inverse-surface text-inverse-on-surface;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-surface-container-lowest/70 backdrop-blur-md;
+  }
+
+  .card-surface {
+    @apply rounded-xl border border-outline-variant/60 bg-surface-container-lowest p-6 shadow-card transition-all duration-200;
+  }
+
+  .card-surface-hover {
+    @apply card-surface hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-elevated;
+  }
+
+  .nav-active {
+    @apply rounded-lg bg-primary-container/15 font-semibold text-primary;
+  }
+
+  .nav-inactive {
+    @apply rounded-lg text-on-surface-variant transition-colors hover:bg-surface-container-high hover:text-primary;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-outline-variant/60;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .dark .card-surface,
+  .dark .card-surface-hover {
+    @apply border-outline-variant/30 bg-surface-container-high;
+  }
+
+  .dark .nav-active {
+    @apply bg-primary/20 text-primary-fixed-dim;
+  }
+
+  .dark .nav-inactive {
+    @apply text-outline hover:bg-on-surface-variant/10 hover:text-primary-fixed-dim;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    color-scheme: dark;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

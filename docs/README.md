@@ -1,6 +1,6 @@
-# MathQuest — Documentation Index
+# MathBattle — Documentation Index
 
-MathQuest is an AI-powered educational SaaS web platform that uses gamification to improve mathematics learning for students in grades K–12. This documentation package is enterprise-grade and implementation-ready.
+MathBattle is an AI-powered educational SaaS web platform that uses gamification to improve mathematics learning for students in grades K–12. This documentation package is enterprise-grade and implementation-ready.
 
 ---
 
@@ -76,4 +76,4 @@ MathQuest is an AI-powered educational SaaS web platform that uses gamification 
 
 ---
 
-*Documentation version: 1.0.0 — MathQuest Enterprise Pack*
+*Documentation version: 1.0.0 — MathBattle Enterprise Pack*

@@ -1,0 +1,43 @@
+flowchart TD
+    subgraph Players ["Players"]
+        P1["Student A"]
+        P2["Student B"]
+    end
+
+    subgraph WS ["WebSocket Match Server"]
+        Lobby["Match Lobby"]
+        Engine["Match Engine"]
+        AntiCheat["Anti-Cheat Monitor"]
+    end
+
+    subgraph Stores ["Data Stores"]
+        Redis[("Redis: Match State")]
+        PG[("PostgreSQL")]
+        QB[("Question Bank")]
+    end
+
+    subgraph PostMatch ["Post-Match"]
+        XP["Gamification: Award XP"]
+        Notify["Notifications"]
+    end
+
+    P1 -->|"Invite / Accept"| Lobby
+    P2 -->|"Invite / Accept"| Lobby
+    Lobby -->|"Pair same grade"| Engine
+
+    Engine -->|"Select 10 questions"| QB
+    Engine -->|"Store state"| Redis
+    Engine -->|"Deliver cards"| P1
+    Engine -->|"Deliver cards"| P2
+
+    P1 -->|"Submit answer"| Engine
+    P2 -->|"Submit answer"| Engine
+    P1 -->|"Focus events"| AntiCheat
+    P2 -->|"Focus events"| AntiCheat
+    AntiCheat --> Engine
+
+    Engine -->|"Match complete"| PG
+    PG --> XP
+    XP --> Notify
+    Notify --> P1
+    Notify --> P2

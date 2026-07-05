@@ -1,4 +1,4 @@
-# UX Flows — MathQuest
+# UX Flows — MathBattle
 
 **Version:** 1.0.0
 

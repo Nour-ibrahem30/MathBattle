@@ -1,4 +1,4 @@
-# Milestones — MathQuest
+# Milestones — MathBattle
 
 **Version:** 1.0.0
 

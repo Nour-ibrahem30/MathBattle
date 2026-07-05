@@ -1,4 +1,4 @@
-# Backup and Recovery Plan — MathQuest
+# Backup and Recovery Plan — MathBattle
 
 **Version:** 1.0.0
 

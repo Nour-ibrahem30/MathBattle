@@ -1,4 +1,4 @@
-# Testing Strategy — MathQuest
+# Testing Strategy — MathBattle
 
 **Version:** 1.0.0
 

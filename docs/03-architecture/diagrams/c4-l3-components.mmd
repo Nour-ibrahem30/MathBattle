@@ -1,0 +1,54 @@
+flowchart TB
+    subgraph API ["REST API Container"]
+        subgraph Controllers ["Controllers"]
+            AuthC["AuthController"]
+            LearnC["LearningController"]
+            QuestC["QuestionController"]
+            MatchC["MatchController"]
+            GameC["GamificationController"]
+            DashC["DashboardController"]
+            AdminC["AdminController"]
+        end
+
+        subgraph Services ["Services"]
+            AuthS["AuthService"]
+            LearnS["LearningService"]
+            QuestS["QuestionService"]
+            MatchS["MatchService"]
+            GameS["GamificationService"]
+            AIS["AIService"]
+            NotifS["NotificationService"]
+        end
+
+        subgraph Shared ["Shared Layer"]
+            Guards["AuthGuard + RBAC"]
+            Audit["AuditLogger"]
+            Cache["CacheService"]
+            Queue["JobProducer"]
+        end
+
+        subgraph Data ["Data Access"]
+            Repos["Repositories"]
+        end
+    end
+
+    AuthC --> AuthS
+    LearnC --> LearnS
+    QuestC --> QuestS
+    MatchC --> MatchS
+    GameC --> GameS
+    DashC --> LearnS
+    DashC --> GameS
+    AdminC --> AuthS
+
+    AuthS --> Guards
+    LearnS --> Repos
+    QuestS --> Repos
+    QuestS --> AIS
+    MatchS --> Repos
+    GameS --> Repos
+    AIS --> Queue
+    NotifS --> Queue
+
+    Repos --> Cache
+    AuthS --> Audit

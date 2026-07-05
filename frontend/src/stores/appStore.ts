@@ -1,0 +1,310 @@
+import { create } from 'zustand';
+import { DEMO_PASSWORD } from '@/data/seed';
+import {
+  clearSession,
+  loadAppData,
+  loadSession,
+  saveAppData,
+  saveSession,
+  type AuthSession,
+} from '@/data/storage';
+import type { AppSeedData } from '@/data/seed';
+import type { Assignment, CardColor, Lesson, Match, MatchCard, Question, User } from '@/types';
+import { CARD_CONFIG, getRankFromXp } from '@/types';
+import { delay, generateId } from '@/lib/utils';
+
+const CARD_COLORS: CardColor[] = ['green', 'green', 'green', 'green', 'blue', 'blue', 'blue', 'purple', 'orange', 'red'];
+
+interface AppState {
+  session: AuthSession | null;
+  user: User | null;
+  isLoading: boolean;
+  data: AppSeedData;
+  persist: () => void;
+  login: (email: string, password: string) => Promise<{ ok: boolean; error?: string }>;
+  logout: () => void;
+  hydrate: () => void;
+  getLessonProgress: (lessonId: string) => number;
+  isLessonLocked: (lesson: Lesson) => boolean;
+  startLessonAttempt: (lessonId: string) => string;
+  submitAnswer: (attemptId: string, questionId: string, answer: string, correct: boolean, timeTaken: number) => void;
+  completeLessonAttempt: (attemptId: string) => { score: number; xp: number };
+  awardXp: (userId: string, amount: number) => void;
+  createMatch: (opponentId: string) => Match;
+  getMatch: (matchId: string) => Match | undefined;
+  submitMatchAnswer: (matchId: string, userId: string, cardIndex: number, answer: string, correct: boolean) => void;
+  completeMatch: (matchId: string) => Match;
+  addQuestion: (question: Omit<Question, 'id'>) => Question;
+  updateQuestion: (id: string, patch: Partial<Question>) => void;
+  publishQuestion: (id: string) => void;
+  generateAiQuestions: (prompt: { grade: number; topic: string; count: number }) => Promise<Question[]>;
+  markNotificationRead: (id: string) => void;
+  markAllNotificationsRead: (userId: string) => void;
+  completeOnboarding: (userId: string) => void;
+  updateUserStatus: (userId: string, status: User['status']) => void;
+  addAssignment: (assignment: Omit<Assignment, 'id'>) => Assignment;
+}
+
+export const useAppStore = create<AppState>((set, get) => ({
+  session: null,
+  user: null,
+  isLoading: false,
+  data: loadAppData(),
+
+  persist: () => saveAppData(get().data),
+
+  hydrate: () => {
+    const session = loadSession();
+    if (!session) return;
+    const user = get().data.users.find((u) => u.id === session.userId);
+    if (user) set({ session, user });
+  },
+
+  login: async (email, password) => {
+    set({ isLoading: true });
+    await delay(600);
+    const { data } = get();
+    const user = data.users.find((u) => u.email.toLowerCase() === email.toLowerCase());
+    if (!user || password !== DEMO_PASSWORD) {
+      set({ isLoading: false });
+      return { ok: false, error: 'Invalid email or password.' };
+    }
+    if (user.status === 'suspended') {
+      set({ isLoading: false });
+      return { ok: false, error: 'Your account has been suspended.' };
+    }
+    const session: AuthSession = {
+      userId: user.id,
+      accessToken: `mock-jwt-${user.id}`,
+      expiresAt: Date.now() + 15 * 60 * 1000,
+    };
+    saveSession(session);
+    set({ session, user, isLoading: false });
+    return { ok: true };
+  },
+
+  logout: () => {
+    clearSession();
+    set({ session: null, user: null });
+  },
+
+  getLessonProgress: (lessonId) => {
+    const { data, user } = get();
+    if (!user) return 0;
+    const attempt = data.lessonAttempts.find(
+      (a) => a.studentUserId === user.id && a.lessonId === lessonId && a.status === 'completed',
+    );
+    return attempt?.scorePercentage ?? 0;
+  },
+
+  isLessonLocked: (lesson) => {
+    if (!lesson.prerequisiteLessonId) return false;
+    return get().getLessonProgress(lesson.prerequisiteLessonId) < 60;
+  },
+
+  startLessonAttempt: (lessonId) => {
+    const { data, user } = get();
+    if (!user) throw new Error('Not authenticated');
+    const existing = data.lessonAttempts.find(
+      (a) => a.studentUserId === user.id && a.lessonId === lessonId && a.status === 'in_progress',
+    );
+    if (existing) return existing.id;
+    const id = generateId();
+    data.lessonAttempts.push({
+      id,
+      studentUserId: user.id,
+      lessonId,
+      status: 'in_progress',
+      answers: [],
+      startedAt: new Date().toISOString(),
+    });
+    get().persist();
+    return id;
+  },
+
+  submitAnswer: (attemptId, questionId, answer, correct, timeTaken) => {
+    const attempt = get().data.lessonAttempts.find((a) => a.id === attemptId);
+    if (!attempt) return;
+    attempt.answers.push({ questionId, answer, correct, timeTakenSeconds: timeTaken });
+    get().persist();
+  },
+
+  completeLessonAttempt: (attemptId) => {
+    const { data, user } = get();
+    const attempt = data.lessonAttempts.find((a) => a.id === attemptId);
+    if (!attempt || !user) return { score: 0, xp: 0 };
+    const correct = attempt.answers.filter((a) => a.correct).length;
+    const total = attempt.answers.length || 1;
+    const score = Math.round((correct / total) * 100);
+    const xp = Math.round(score / 10) * 5 + 10;
+    attempt.status = 'completed';
+    attempt.scorePercentage = score;
+    attempt.xpEarned = xp;
+    attempt.completedAt = new Date().toISOString();
+    get().awardXp(user.id, xp);
+    if (score === 100) {
+      const ach = data.achievements.find((a) => a.code === 'perfect_score');
+      if (ach && !data.studentAchievements.some((sa) => sa.studentUserId === user.id && sa.achievementId === ach.id)) {
+        data.studentAchievements.push({ studentUserId: user.id, achievementId: ach.id, earnedAt: new Date().toISOString() });
+        get().awardXp(user.id, ach.xpReward);
+      }
+    }
+    const firstAch = data.achievements.find((a) => a.code === 'first_step');
+    if (firstAch && !data.studentAchievements.some((sa) => sa.studentUserId === user.id && sa.achievementId === firstAch.id)) {
+      data.studentAchievements.push({ studentUserId: user.id, achievementId: firstAch.id, earnedAt: new Date().toISOString() });
+      get().awardXp(user.id, firstAch.xpReward);
+    }
+    get().persist();
+    return { score, xp };
+  },
+
+  awardXp: (userId, amount) => {
+    const profile = get().data.studentProfiles.find((p) => p.userId === userId);
+    if (!profile) return;
+    profile.totalXp += amount;
+    profile.rank = getRankFromXp(profile.totalXp);
+    profile.streakLastActivityDate = new Date().toISOString().split('T')[0];
+    get().persist();
+  },
+
+  createMatch: (opponentId) => {
+    const { data, user } = get();
+    if (!user) throw new Error('Not authenticated');
+    const opponent = data.users.find((u) => u.id === opponentId)!;
+    const published = data.questions.filter((q) => q.status === 'published' && q.grade === 5);
+    const cards: MatchCard[] = CARD_COLORS.map((color, i) => ({
+      id: generateId(),
+      questionId: published[i % published.length]?.id ?? published[0]!.id,
+      cardColor: color,
+      cardPoints: CARD_CONFIG[color],
+      orderIndex: i + 1,
+    }));
+    const match: Match = {
+      id: generateId(),
+      player1UserId: user.id,
+      player2UserId: opponentId,
+      player1Name: user.fullName,
+      player2Name: opponent.fullName,
+      grade: 5,
+      status: 'active',
+      player1Score: 0,
+      player2Score: 0,
+      cards,
+      startedAt: new Date().toISOString(),
+    };
+    data.matches.unshift(match);
+    get().persist();
+    return match;
+  },
+
+  getMatch: (matchId) => get().data.matches.find((m) => m.id === matchId),
+
+  submitMatchAnswer: (matchId, userId, cardIndex, answer, correct) => {
+    const match = get().data.matches.find((m) => m.id === matchId);
+    if (!match) return;
+    const card = match.cards[cardIndex];
+    if (!card) return;
+    if (match.player1UserId === userId) {
+      card.player1Answer = answer;
+      card.player1Correct = correct;
+      match.player1Score = (match.player1Score ?? 0) + (correct ? card.cardPoints : -1);
+    } else {
+      card.player2Answer = answer;
+      card.player2Correct = correct;
+      match.player2Score = (match.player2Score ?? 0) + (correct ? card.cardPoints : -1);
+    }
+    get().persist();
+  },
+
+  completeMatch: (matchId) => {
+    const { data, user } = get();
+    const match = data.matches.find((m) => m.id === matchId)!;
+    match.status = 'completed';
+    match.completedAt = new Date().toISOString();
+    const p1 = match.player1Score ?? 0;
+    const p2 = match.player2Score ?? 0;
+    if (p1 > p2) match.winnerUserId = match.player1UserId;
+    else if (p2 > p1) match.winnerUserId = match.player2UserId;
+    if (user) get().awardXp(user.id, match.winnerUserId === user.id ? 50 : 20);
+    get().persist();
+    return match;
+  },
+
+  addQuestion: (question) => {
+    const q: Question = { ...question, id: generateId() };
+    get().data.questions.unshift(q);
+    get().persist();
+    return q;
+  },
+
+  updateQuestion: (id, patch) => {
+    const q = get().data.questions.find((x) => x.id === id);
+    if (q) Object.assign(q, patch);
+    get().persist();
+  },
+
+  publishQuestion: (id) => get().updateQuestion(id, { status: 'published' }),
+
+  generateAiQuestions: async ({ grade, topic, count }) => {
+    await delay(1500);
+    const results: Question[] = [];
+    for (let i = 0; i < count; i++) {
+      results.push(
+        get().addQuestion({
+          questionText: `[AI] ${topic} practice question ${i + 1} (Grade ${grade})`,
+          questionType: 'multiple_choice',
+          options: [
+            { text: 'Correct answer', isCorrect: true },
+            { text: 'Option B', isCorrect: false },
+            { text: 'Option C', isCorrect: false },
+            { text: 'Option D', isCorrect: false },
+          ],
+          grade,
+          subject: 'Mathematics',
+          topic,
+          unit: topic,
+          difficulty: 2,
+          bloomLevel: 'apply',
+          hints: ['Break the problem into smaller steps.'],
+          solutionExplanation: 'Pending teacher review.',
+          tags: [topic.toLowerCase(), 'ai'],
+          status: 'draft',
+          aiGenerated: true,
+          createdBy: get().user?.id ?? 'user-teacher-001',
+        }),
+      );
+    }
+    return results;
+  },
+
+  markNotificationRead: (id) => {
+    const n = get().data.notifications.find((x) => x.id === id);
+    if (n) n.readAt = new Date().toISOString();
+    get().persist();
+  },
+
+  markAllNotificationsRead: (userId) => {
+    get().data.notifications.filter((n) => n.userId === userId && !n.readAt).forEach((n) => {
+      n.readAt = new Date().toISOString();
+    });
+    get().persist();
+  },
+
+  completeOnboarding: (userId) => {
+    get().data.onboardingComplete[userId] = true;
+    get().persist();
+  },
+
+  updateUserStatus: (userId, status) => {
+    const u = get().data.users.find((x) => x.id === userId);
+    if (u) u.status = status;
+    get().persist();
+  },
+
+  addAssignment: (assignment) => {
+    const a: Assignment = { ...assignment, id: generateId() };
+    get().data.assignments.unshift(a);
+    get().persist();
+    return a;
+  },
+}));

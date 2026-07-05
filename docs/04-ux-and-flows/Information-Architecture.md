@@ -1,4 +1,4 @@
-# Information Architecture — MathQuest
+# Information Architecture — MathBattle
 
 **Version:** 1.0.0
 
@@ -7,7 +7,7 @@
 ## Sitemap
 
 ```
-MathQuest Platform
+MathBattle Platform
 │
 ├── Public (unauthenticated)
 │   ├── /login

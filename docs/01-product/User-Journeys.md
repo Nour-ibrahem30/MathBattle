@@ -1,4 +1,4 @@
-# User Journeys — MathQuest
+# User Journeys — MathBattle
 
 **Version:** 1.0.0
 

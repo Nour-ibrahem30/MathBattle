@@ -1,4 +1,4 @@
-# Component Architecture — MathQuest
+# Component Architecture — MathBattle
 
 **Version:** 1.0.0
 

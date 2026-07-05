@@ -1,4 +1,4 @@
-# API Design — MathQuest
+# API Design — MathBattle
 
 **Version:** 1.0.0
 
@@ -6,7 +6,7 @@
 
 ## Overview
 
-MathQuest exposes a REST API for all platform operations. A GraphQL compatibility layer is planned for Phase 2. The API is versioned, authenticated via JWT, and follows RFC 7807 for error responses.
+MathBattle exposes a REST API for all platform operations. A GraphQL compatibility layer is planned for Phase 2. The API is versioned, authenticated via JWT, and follows RFC 7807 for error responses.
 
 ---
 
@@ -28,8 +28,8 @@ MathQuest exposes a REST API for all platform operations. A GraphQL compatibilit
 
 | Environment | Base URL |
 |---|---|
-| Production | `https://api.mathquest.io/api/v1` |
-| Staging | `https://api.staging.mathquest.io/api/v1` |
+| Production | `https://api.mathbattle.io/api/v1` |
+| Staging | `https://api.staging.mathbattle.io/api/v1` |
 | Local | `http://localhost:3000/api/v1` |
 
 ---
@@ -130,7 +130,7 @@ MathQuest exposes a REST API for all platform operations. A GraphQL compatibilit
 
 ```json
 {
-  "type": "https://api.mathquest.io/errors/validation-error",
+  "type": "https://api.mathbattle.io/errors/validation-error",
   "title": "Validation Error",
   "status": 400,
   "detail": "One or more fields failed validation.",
@@ -320,7 +320,7 @@ Rate limit headers returned on every response:
 
 ## WebSocket API
 
-**Endpoint:** `wss://api.mathquest.io/ws/matches/{match_id}`
+**Endpoint:** `wss://api.mathbattle.io/ws/matches/{match_id}`
 
 **Authentication:** JWT passed as query parameter on connection: `?token=<jwt>`
 

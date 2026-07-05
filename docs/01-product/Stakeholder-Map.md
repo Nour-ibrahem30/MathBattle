@@ -1,4 +1,4 @@
-# Stakeholder Map — MathQuest
+# Stakeholder Map — MathBattle
 
 **Version:** 1.0.0
 

@@ -1,0 +1,37 @@
+flowchart TB
+    subgraph Client ["Client Apps"]
+        Frontend["Web Frontend\n(React SPA, CDN-served)"]
+    end
+
+    subgraph Platform ["MathBattle Platform (Containers)"]
+        API["REST API\n(Node.js, NestJS)"]
+        WS["WebSocket Server\n(Node.js, Socket.io)"]
+        Worker["AI Worker Service\n(Node.js, BullMQ Worker)"]
+        
+        DB[("PostgreSQL\n(Primary & Read Replica)")]
+        Redis[("Redis Cache\n(Sessions, Leaderboards, Rate Limits)")]
+        Queue[("Job Queue\n(BullMQ / Redis)")]
+    end
+
+    subgraph External ["External Providers"]
+        AI["AI Provider\n(OpenAI/Anthropic)"]
+        Email["Email Service\n(SendGrid/Postmark)"]
+        Storage["Cloud Storage\n(AWS S3/GCS)"]
+    end
+
+    Frontend -->|HTTPS API Requests| API
+    Frontend -->|WebSockets Match Sessions| WS
+
+    API -->|Reads/Writes| DB
+    API -->|Cache / Rate Limit| Redis
+    API -->|Enqueues Jobs| Queue
+
+    WS -->|Checks Connection/State| Redis
+    WS -->|Reads/Writes Results| DB
+
+    Queue -->|Pipes Jobs| Worker
+    Worker -->|Makes Calls| AI
+    Worker -->|Writes Results| DB
+
+    API -->|Sends Emails| Email
+    API -->|Stores Uploads & Exports| Storage

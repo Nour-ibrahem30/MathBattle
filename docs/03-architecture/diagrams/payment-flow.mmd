@@ -1,0 +1,31 @@
+sequenceDiagram
+    participant T as Teacher
+    participant FE as Frontend
+    participant API as REST API
+    participant Q as BullMQ
+    participant W as AI Worker
+    participant AI as AI Provider
+    participant D as PostgreSQL
+
+    Note over T,D: Phase 3 — Subscription Payment (Future)
+    T->>FE: Select subscription plan
+    FE->>API: POST /billing/checkout
+    API->>API: Create Stripe Checkout Session
+    API-->>FE: Redirect URL
+    FE->>T: Redirect to Stripe Hosted Checkout
+    T->>T: Complete payment on Stripe
+
+    Note over T,D: Webhook Processing
+    AI->>API: POST /webhooks/stripe (payment_intent.succeeded)
+    API->>API: Verify signature
+    API->>Q: Enqueue process_payment_webhook
+    API-->>AI: 200 OK
+    Q->>W: Consume job
+    W->>D: Update subscription status
+    W->>D: INSERT audit_log
+
+    Note over T,D: Confirmation
+    FE->>API: GET /billing/subscription
+    API->>D: SELECT subscription
+    API-->>FE: Active subscription
+    FE->>T: Show confirmation

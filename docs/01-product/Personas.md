@@ -1,4 +1,4 @@
-# User Personas — MathQuest
+# User Personas — MathBattle
 
 **Version:** 1.0.0
 

@@ -1,0 +1,33 @@
+sequenceDiagram
+    participant C as Client (Browser)
+    participant A as REST API
+    participant D as PostgreSQL
+    participant R as Redis
+
+    Note over C,R: Login Flow
+    C->>A: POST /auth/login {email, password}
+    A->>R: Check rate limit (rl:ip:login)
+    A->>D: SELECT user by email
+    D-->>A: User record
+    A->>A: bcrypt.compare(password)
+    A->>A: Generate JWT (15min, RS256)
+    A->>A: Generate refresh token
+    A->>D: INSERT refresh_token (hash)
+    A->>D: INSERT audit_log (user.login)
+    A-->>C: 200 {accessToken, refreshToken, user}
+
+    Note over C,R: Token Refresh Flow
+    C->>A: POST /auth/refresh {refreshToken}
+    A->>D: SELECT refresh_token by hash
+    D-->>A: Token record
+    A->>A: Validate expiry, not revoked
+    A->>D: DELETE old refresh_token
+    A->>A: Generate new JWT + refresh token
+    A->>D: INSERT new refresh_token (hash)
+    A-->>C: 200 {accessToken, refreshToken}
+
+    Note over C,R: Logout Flow
+    C->>A: POST /auth/logout {refreshToken}
+    A->>D: SET revoked_at on refresh_token
+    A->>D: INSERT audit_log (user.logout)
+    A-->>C: 204 No Content

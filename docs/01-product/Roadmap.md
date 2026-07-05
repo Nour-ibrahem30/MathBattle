@@ -1,4 +1,4 @@
-# Roadmap — MathQuest
+# Roadmap — MathBattle
 
 **Version:** 1.0.0
 

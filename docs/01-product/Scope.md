@@ -1,4 +1,4 @@
-# Scope — MathQuest
+# Scope — MathBattle
 
 **Version:** 1.0.0
 

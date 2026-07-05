@@ -1,4 +1,4 @@
-# System Architecture — MathQuest
+# System Architecture — MathBattle
 
 **Version:** 1.0.0
 
@@ -22,7 +22,7 @@
 
 ## Architecture Style
 
-MathQuest uses a **modular monolith** architecture for Phase 1, designed for extraction into microservices in Phase 3+. This approach:
+MathBattle uses a **modular monolith** architecture for Phase 1, designed for extraction into microservices in Phase 3+. This approach:
 - Reduces operational complexity during early phases
 - Maintains clear module boundaries for future extraction
 - Allows a small team to move quickly without distributed systems overhead
@@ -47,14 +47,14 @@ The WebSocket match server is the only component deployed separately from the ma
 ## C4 Level 1 — System Context Diagram
 
 ```
-Diagram: MathQuest System Context
+Diagram: MathBattle System Context
 
 External Actors:
   [Student] ──────────────────────────────────────────────────────────────────┐
   [Teacher] ──────────────────────────────────────────────────────────────────┤
   [Administrator] ─────────────────────────────────────────────────────────── ▼
                                                                     ┌─────────────────┐
-                                                                    │   MathQuest     │
+                                                                    │   MathBattle     │
                                                                     │   Web Platform  │
                                                                     └────────┬────────┘
                                                                              │
@@ -68,7 +68,7 @@ External Actors:
 ```
 
 **Description:**
-- Students, Teachers, and Administrators interact with the MathQuest Web Platform via a browser.
+- Students, Teachers, and Administrators interact with the MathBattle Web Platform via a browser.
 - The platform communicates with an AI Provider for question generation and analysis.
 - The platform uses an Email Service for transactional emails (welcome, password reset, notifications).
 - The platform uses Cloud Storage for document imports, report exports, and static assets.
@@ -78,10 +78,10 @@ External Actors:
 ## C4 Level 2 — Container Architecture
 
 ```
-Diagram: MathQuest Container Architecture
+Diagram: MathBattle Container Architecture
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                          MathQuest Platform                                 │
+│                          MathBattle Platform                                 │
 │                                                                             │
 │  ┌──────────────────┐    ┌──────────────────┐    ┌──────────────────────┐  │
 │  │   Web Frontend   │    │   REST API       │    │  WebSocket Server    │  │

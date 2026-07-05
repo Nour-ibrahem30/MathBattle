@@ -1,11 +1,11 @@
-# Requirements Traceability Matrix (RTM) — MathQuest
+# Requirements Traceability Matrix (RTM) — MathBattle
 
 **Version:** 1.0.0
 
 ---
 
 ## Purpose
-This matrix traces every product requirement from its business source through to architecture, API, data, and test coverage. It is the single source of traceability for the MathQuest platform.
+This matrix traces every product requirement from its business source through to architecture, API, data, and test coverage. It is the single source of traceability for the MathBattle platform.
 
 ---
 

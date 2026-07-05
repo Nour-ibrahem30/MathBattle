@@ -1,4 +1,4 @@
-# Release Plan — MathQuest
+# Release Plan — MathBattle
 
 **Version:** 1.0.0
 
@@ -6,7 +6,7 @@
 
 ## Release Strategy
 
-MathQuest uses a phased release strategy: internal testing → pilot school → general availability. Each release gate must be passed before proceeding.
+MathBattle uses a phased release strategy: internal testing → pilot school → general availability. Each release gate must be passed before proceeding.
 
 ---
 
@@ -75,7 +75,7 @@ MathQuest uses a phased release strategy: internal testing → pilot school → 
 | Engineering team | Slack #releases | On every deployment |
 | Pilot schools | Email | Before major releases |
 | All schools | In-app announcement | On feature releases |
-| Status page | status.mathquest.io | On any incident |
+| Status page | status.mathbattle.io | On any incident |
 
 ---
 

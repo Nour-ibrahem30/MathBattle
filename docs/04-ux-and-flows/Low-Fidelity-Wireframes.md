@@ -1,4 +1,4 @@
-# Low-Fidelity Wireframes — MathQuest
+# Low-Fidelity Wireframes — MathBattle
 
 **Version:** 1.0.0
 **Note:** Wireframes are described textually as layout block specifications. No visual styling is implied.
@@ -28,7 +28,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    [MathQuest Logo]                         │
+│                    [MathBattle Logo]                         │
 │                                                             │
 │              ┌─────────────────────────────┐               │
 │              │  Email Address              │               │

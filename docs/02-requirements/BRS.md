@@ -1,4 +1,4 @@
-# Business Requirements Specification (BRS) — MathQuest
+# Business Requirements Specification (BRS) — MathBattle
 
 **Version:** 1.0.0
 **Status:** Approved

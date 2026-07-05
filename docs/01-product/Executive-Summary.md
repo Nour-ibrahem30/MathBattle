@@ -1,7 +1,7 @@
-# Executive Summary — MathQuest
+# Executive Summary — MathBattle
 
 ## Product Name
-MathQuest
+MathBattle
 
 ## Classification
 AI-Powered Educational SaaS Web Platform
@@ -19,7 +19,7 @@ Mathematics underperformance is a persistent challenge across K–12 education g
 
 ## The Solution
 
-MathQuest is a responsive web platform that delivers structured, curriculum-aligned mathematics learning through AI-powered personalization and carefully scoped gamification. It serves three primary user types — students, teachers, and administrators — through a single integrated platform.
+MathBattle is a responsive web platform that delivers structured, curriculum-aligned mathematics learning through AI-powered personalization and carefully scoped gamification. It serves three primary user types — students, teachers, and administrators — through a single integrated platform.
 
 Education is the primary objective. Gamification is a motivational layer applied only within learning activities, never as a distraction from curriculum goals.
 

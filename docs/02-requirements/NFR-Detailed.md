@@ -1,4 +1,4 @@
-# Non-Functional Requirements — Detailed (NFR-Detailed) — MathQuest
+# Non-Functional Requirements — Detailed (NFR-Detailed) — MathBattle
 
 **Version:** 1.0.0
 

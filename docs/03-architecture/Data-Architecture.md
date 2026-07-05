@@ -1,4 +1,4 @@
-# Data Architecture — MathQuest
+# Data Architecture — MathBattle
 
 **Version:** 1.0.0
 

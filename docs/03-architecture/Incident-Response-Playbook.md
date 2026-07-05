@@ -1,4 +1,4 @@
-# Incident Response Playbook — MathQuest
+# Incident Response Playbook — MathBattle
 
 **Version:** 1.0.0
 
@@ -15,7 +15,7 @@
 
 ## Incident Model
 
-An incident is any unplanned event that causes or risks causing degradation to the MathQuest platform, student data, or user trust.
+An incident is any unplanned event that causes or risks causing degradation to the MathBattle platform, student data, or user trust.
 
 ---
 
@@ -84,7 +84,7 @@ We apologize for the inconvenience.
 
 **School notification (P0 only):**
 ```
-Subject: MathQuest Service Disruption — [Date]
+Subject: MathBattle Service Disruption — [Date]
 We experienced a service disruption from [start time] to [end time] UTC.
 [Description of impact.]
 [Description of resolution.]

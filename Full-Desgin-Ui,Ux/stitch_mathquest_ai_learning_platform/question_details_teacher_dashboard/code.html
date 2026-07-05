@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MathQuest | Question Detail</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Geist:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(250, 248, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .math-field-focus:focus-within {
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .animate-shimmer {
+            background: linear-gradient(90deg, rgba(226, 232, 240, 0) 0%, rgba(226, 232, 240, 0.5) 50%, rgba(226, 232, 240, 0) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite linear;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#fffbff",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed-variant": "#5a00c6",
+                    "tertiary-container": "#bc4800",
+                    "surface-container": "#ededf9",
+                    "tertiary": "#943700",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-background": "#191b23",
+                    "tertiary-fixed": "#ffdbcd",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#00174b",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#f0f0fb",
+                    "background": "#faf8ff",
+                    "on-surface-variant": "#434655",
+                    "primary": "#004ac6",
+                    "outline-variant": "#c3c6d7",
+                    "surface-variant": "#e1e2ed",
+                    "surface-container-highest": "#e1e2ed",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#d9d9e5",
+                    "surface-tint": "#0053db",
+                    "surface-container-low": "#f3f3fe",
+                    "primary-fixed": "#dbe1ff",
+                    "primary-container": "#2563eb",
+                    "outline": "#737686",
+                    "secondary-fixed-dim": "#d2bbff",
+                    "on-primary-container": "#eeefff",
+                    "on-tertiary-fixed": "#360f00",
+                    "on-error-container": "#93000a",
+                    "surface-container-high": "#e7e7f3",
+                    "on-error": "#ffffff",
+                    "inverse-primary": "#b4c5ff",
+                    "surface": "#faf8ff",
+                    "secondary-container": "#8a4cfc",
+                    "on-surface": "#191b23",
+                    "inverse-surface": "#2e3039",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "secondary": "#712ae2",
+                    "on-secondary-fixed": "#25005a",
+                    "surface-bright": "#faf8ff",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "secondary-fixed": "#eaddff",
+                    "on-tertiary-container": "#ffede6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "0.5rem",
+                    "gutter": "24px",
+                    "xl": "4rem",
+                    "sm": "1rem",
+                    "unit": "4px",
+                    "margin-desktop": "48px",
+                    "lg": "2.5rem",
+                    "md": "1.5rem",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Geist"],
+                    "headline-md": ["Inter"],
+                    "label-sm": ["Geist"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.015em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="bg-surface/80 dark:bg-surface/80 backdrop-blur-md shadow-sm w-full sticky top-0 z-40">
+<div class="flex justify-between items-center px-gutter py-xs w-full max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-md">
+<span class="text-headline-md font-headline-md font-bold text-primary">MathQuest</span>
+<nav class="hidden md:flex gap-sm items-center ml-lg">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">Dashboard</a>
+<a class="text-primary font-bold border-b-2 border-primary py-1 font-label-md text-label-md" href="#">Classes</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">Question Bank</a>
+</nav>
+</div>
+<div class="flex items-center gap-sm">
+<div class="hidden sm:flex items-center bg-surface-container-low rounded-full px-sm py-1 border border-outline-variant">
+<span class="material-symbols-outlined text-outline" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-label-md w-48" placeholder="Search questions..." type="text"/>
+</div>
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-primary/20">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a teacher in their late 30s with a warm, encouraging smile. The background is a blurred high-tech classroom with soft blue and white accent lighting, maintaining the MathQuest modern academic aesthetic. The image is crisp, high-fidelity, and conveys authority and approachability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBk4VWS_YNLYwBD9D9MDgJWNTD2MBI9StDExWQh6GGJeegf6NTDK2PP6JHbKhCnW66DF7xZAD7pYW2lIhG3DMzM5o4ZHF0JnTdAiWagFzmPocNKybF49r0wbfqPwbA8uSTab4YjjfqkYLZQPo5UETg-6mgtSaF3RvrnI1bmhLHilsu4T2WE6_u0GgzDTP6Z7L4zhmEln-wVVU1Z0gVS7pjastM1aXw7S6Ns9gt2qoo9AezzPBIYEJACvPSXQAcesZVu8ubIc8FdTw"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-screen-2xl mx-auto flex gap-lg p-gutter">
+<!-- Side Navigation (Authoritative Sidebar) -->
+<aside class="hidden lg:flex flex-col w-64 flex-shrink-0 gap-md">
+<div class="bg-surface-container-lowest rounded-xl p-md border border-outline-variant shadow-sm">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-sm">Question Actions</h3>
+<div class="flex flex-col gap-xs">
+<button class="flex items-center gap-sm w-full p-sm rounded-lg bg-primary text-on-primary hover:opacity-90 transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined" data-icon="assignment_add">assignment_add</span>
+<span class="font-label-md">Assign to Class</span>
+</button>
+<button class="flex items-center gap-sm w-full p-sm rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+<span class="font-label-md">Edit Question</span>
+</button>
+<button class="flex items-center gap-sm w-full p-sm rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined" data-icon="post_add">post_add</span>
+<span class="font-label-md">Add to Exam</span>
+</button>
+<hr class="my-xs border-outline-variant"/>
+<button class="flex items-center gap-sm w-full p-sm rounded-lg text-error hover:bg-error-container/20 transition-all">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+<span class="font-label-md">Delete Forever</span>
+</button>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-md border border-outline-variant">
+<h4 class="font-label-md text-label-md text-outline uppercase tracking-wider mb-sm">Metadata</h4>
+<div class="space-y-sm">
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant text-label-md">Grade</span>
+<span class="bg-primary-fixed text-on-primary-fixed px-xs py-0.5 rounded text-label-sm">Grade 9</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant text-label-md">Subject</span>
+<span class="text-on-surface font-bold text-label-md">Calculus</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant text-label-md">Difficulty</span>
+<span class="text-error font-bold text-label-md">Hard</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant text-label-md">Success Rate</span>
+<span class="text-secondary font-bold text-label-md">42%</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Workspace (Tactile Precision) -->
+<div class="flex-grow flex flex-col gap-lg max-w-4xl">
+<!-- Question Content Card -->
+<section class="bg-surface-container-lowest rounded-xl p-lg border border-outline-variant shadow-sm relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary"></div>
+<div class="flex justify-between items-start mb-md">
+<div>
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-widest">Question ID: #MQ-9402</span>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mt-1">First Derivative Calculation</h1>
+</div>
+<button class="bg-secondary-container text-on-secondary-container px-sm py-xs rounded-lg font-label-md flex items-center gap-xs hover:shadow-md transition-all active:scale-95" id="previewBtn">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+                        Preview as Student
+                    </button>
+</div>
+<div class="prose max-w-none mb-xl">
+<p class="text-body-lg text-on-surface leading-relaxed mb-md">
+                        Find the first derivative of the function \( f(x) = \sin(x^2) + e^{-x} \) with respect to \( x \). 
+                        Evaluate the derivative at \( x = \sqrt{\pi} \).
+                    </p>
+<div class="bg-surface-container-low rounded-xl p-md flex flex-col items-center justify-center min-h-[200px] border-dashed border-2 border-outline-variant group">
+<div class="w-full h-48 bg-contain bg-center bg-no-repeat mb-md" data-alt="A clean, high-contrast mathematical plot of the function sin(x squared) + e to the power of negative x. The graph is rendered in a minimalist scientific style with a crisp primary blue line on a light grey grid. The lighting is bright and even, evoking an academic textbook aesthetic with modern UI touches. Precise x and y axes are labeled in a professional sans-serif font." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD6Vu5bpO6h6ntb2rvi43ett42TNBOOWF7por4uoj-AYfPIr6fwc87S_S_n4xQtaLg-VixnE-DIH_fdz-ooijNlrSv-J0jnuMAWFb2pIIR2HTxCZ37O72H5Yo5ZM10Oheqg8-oQ8qxUOTADIKFyYmy1WS85Hzt-oVHf8KF66JZUwZnT8dRWBl-FL4pbjg-6OZAbfy5tF8_zzg8Cgmh9sOEt1igQudHLYZdif_yusYIFpXrRAGGMmLVCJL0CuNJhMFwq_h_dwxyi_Q')"></div>
+<p class="text-label-sm text-outline italic">Figure 1.1: Functional visualization for conceptual reference</p>
+</div>
+</div>
+<div class="space-y-sm">
+<h3 class="font-label-md text-label-md text-on-surface-variant font-bold">Solution Steps</h3>
+<div class="space-y-xs">
+<div class="flex gap-sm p-sm bg-surface-container-low rounded-lg border border-outline-variant">
+<span class="flex-shrink-0 w-6 h-6 bg-primary text-on-primary rounded-full flex items-center justify-center text-label-sm">1</span>
+<p class="text-body-md text-on-surface">Apply the Chain Rule to \( \sin(x^2) \): \( \frac{d}{dx}\sin(x^2) = 2x \cos(x^2) \)</p>
+</div>
+<div class="flex gap-sm p-sm bg-surface-container-low rounded-lg border border-outline-variant">
+<span class="flex-shrink-0 w-6 h-6 bg-primary text-on-primary rounded-full flex items-center justify-center text-label-sm">2</span>
+<p class="text-body-md text-on-surface">Apply the Power/Exp Rule to \( e^{-x} \): \( \frac{d}{dx}e^{-x} = -e^{-x} \)</p>
+</div>
+</div>
+</div>
+</section>
+<!-- AI Variations (Bento Grid Style) -->
+<section class="space-y-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary" data-icon="auto_awesome" data-weight="fill">auto_awesome</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">AI Variations</h2>
+</div>
+<button class="text-primary font-label-md hover:underline">Regenerate all</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Variation 1: Conceptual Shift -->
+<div class="bg-surface-container-low p-md rounded-xl border border-outline-variant hover:border-primary transition-colors cursor-pointer group">
+<div class="flex justify-between mb-sm">
+<span class="text-label-sm font-label-sm text-outline uppercase">Scenario-based</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="add_circle">add_circle</span>
+</div>
+<p class="text-body-md text-on-surface-variant mb-md italic">
+                            "A particle moves along a path defined by \( s(t) = \cos(t^2) - e^{-2t} \). Determine its velocity at..."
+                        </p>
+<div class="flex gap-xs flex-wrap">
+<span class="bg-surface-variant px-xs py-0.5 rounded text-[10px] font-bold">PHYSICS CONTEXT</span>
+</div>
+</div>
+<!-- Variation 2: Complexity Increase -->
+<div class="bg-surface-container-low p-md rounded-xl border border-outline-variant hover:border-primary transition-colors cursor-pointer group">
+<div class="flex justify-between mb-sm">
+<span class="text-label-sm font-label-sm text-outline uppercase">Advanced Difficulty</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="add_circle">add_circle</span>
+</div>
+<p class="text-body-md text-on-surface-variant mb-md italic">
+                            "Calculate the second derivative of \( f(x) = \ln(\sin(x^2)) \) and find the points of inflection..."
+                        </p>
+<div class="flex gap-xs flex-wrap">
+<span class="bg-error-container text-on-error-container px-xs py-0.5 rounded text-[10px] font-bold">MULTISTEP</span>
+</div>
+</div>
+<!-- Variation 3: Multiple Choice -->
+<div class="bg-surface-container-low p-md rounded-xl border border-outline-variant hover:border-primary transition-colors cursor-pointer group col-span-1 md:col-span-2">
+<div class="flex justify-between mb-sm">
+<span class="text-label-sm font-label-sm text-outline uppercase">Multiple Choice Format</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="add_circle">add_circle</span>
+</div>
+<div class="flex flex-col gap-xs">
+<p class="text-body-md text-on-surface-variant mb-sm">Which of the following represents the derivative of \( \sin(x^2) + e^{-x} \)?</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-xs">
+<div class="bg-surface-container-lowest p-xs rounded border border-outline-variant text-label-sm">A) \( 2x\cos(x^2) - e^{-x} \)</div>
+<div class="bg-surface-container-lowest p-xs rounded border border-outline-variant text-label-sm">B) \( \cos(x^2) - e^{-x} \)</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Side: Quick Stats/Context (Optional but fills the grid) -->
+<aside class="hidden xl:block w-72 flex-shrink-0">
+<div class="bg-secondary-container/10 border border-secondary/20 rounded-xl p-md">
+<div class="flex items-center gap-xs mb-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="psychology">psychology</span>
+<h3 class="font-label-md text-label-md text-on-secondary-fixed-variant">AI Insights</h3>
+</div>
+<p class="text-label-sm text-on-surface-variant leading-relaxed">
+                    Students typically struggle with the <span class="font-bold text-primary">Chain Rule</span> step in this problem. Consider adding a hint about nested functions if success rates remain below 45%.
+                </p>
+<div class="mt-md pt-md border-t border-secondary/20">
+<div class="flex justify-between items-center mb-xs">
+<span class="text-label-sm">Average Time</span>
+<span class="text-label-sm font-bold">4m 20s</span>
+</div>
+<div class="w-full bg-surface-variant h-1 rounded-full overflow-hidden">
+<div class="bg-secondary h-full" style="width: 65%"></div>
+</div>
+</div>
+</div>
+<div class="mt-lg">
+<h4 class="font-label-sm text-outline uppercase tracking-widest mb-md">Related Questions</h4>
+<div class="space-y-sm">
+<div class="p-sm bg-surface-container rounded-lg border border-transparent hover:border-outline-variant transition-all cursor-pointer">
+<p class="text-label-md line-clamp-1">Product Rule: Polynomials</p>
+<span class="text-[10px] text-outline">USED IN 4 EXAMS</span>
+</div>
+<div class="p-sm bg-surface-container rounded-lg border border-transparent hover:border-outline-variant transition-all cursor-pointer">
+<p class="text-label-md line-clamp-1">Integration by Parts: Basic</p>
+<span class="text-[10px] text-outline">USED IN 2 EXAMS</span>
+</div>
+</div>
+</div>
+</aside>
+</main>
+<!-- Preview Modal (Student View) -->
+<div class="fixed inset-0 z-50 hidden items-center justify-center p-md" id="previewModal">
+<div class="absolute inset-0 bg-on-surface/40 backdrop-blur-sm"></div>
+<div class="relative bg-surface p-xl rounded-2xl max-w-2xl w-full shadow-2xl border border-outline-variant animate-in fade-in zoom-in duration-300">
+<div class="flex justify-between items-center mb-lg">
+<h2 class="font-headline-md text-headline-md text-primary">Student Preview Mode</h2>
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors" id="closePreview">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<div class="space-y-lg">
+<div class="p-lg bg-surface-container-low rounded-xl border border-outline-variant">
+<p class="text-body-lg mb-lg">Find the first derivative of the function \( f(x) = \sin(x^2) + e^{-x} \) with respect to \( x \).</p>
+<div class="space-y-sm">
+<label class="text-label-sm font-bold block">Your Answer</label>
+<div class="flex items-center gap-sm bg-surface p-sm rounded-lg border border-outline math-field-focus transition-all">
+<span class="text-primary font-bold">f'(x) = </span>
+<input class="bg-transparent border-none focus:ring-0 w-full font-mono" placeholder="Type your LaTeX or math here..." type="text"/>
+</div>
+</div>
+</div>
+<div class="flex justify-end gap-md">
+<button class="px-md py-sm rounded-lg border border-outline-variant text-on-surface-variant font-label-md hover:bg-surface-container-high">Skip Question</button>
+<button class="px-md py-sm rounded-lg bg-primary text-on-primary font-label-md shadow-lg shadow-primary/20 hover:scale-105 transition-transform active:scale-95">Submit Answer</button>
+</div>
+</div>
+<div class="mt-lg pt-lg border-t border-outline-variant flex items-center justify-center gap-sm text-outline">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+<span class="text-label-sm">This is exactly how students will see the question on their dashboard.</span>
+</div>
+</div>
+</div>
+<!-- Mobile Navigation (Bottom Bar) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-low border-t border-outline-variant flex justify-around py-sm z-50">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-label-sm">Dashboard</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="text-[10px] font-label-sm">Classes</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+<span class="text-[10px] font-label-sm">Analytics</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-[10px] font-label-sm">Settings</span>
+</button>
+</nav>
+<script>
+        const previewBtn = document.getElementById('previewBtn');
+        const previewModal = document.getElementById('previewModal');
+        const closePreview = document.getElementById('closePreview');
+
+        previewBtn.addEventListener('click', () => {
+            previewModal.classList.remove('hidden');
+            previewModal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closePreview.addEventListener('click', () => {
+            previewModal.classList.add('hidden');
+            previewModal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close modal on click outside
+        previewModal.addEventListener('click', (e) => {
+            if (e.target === previewModal) {
+                previewModal.classList.add('hidden');
+                previewModal.classList.remove('flex');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body></html>

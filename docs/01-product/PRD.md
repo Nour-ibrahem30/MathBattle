@@ -1,4 +1,4 @@
-# Product Requirements Document (PRD) — MathQuest
+# Product Requirements Document (PRD) — MathBattle
 
 **Version:** 1.0.0
 **Status:** Approved for Engineering
@@ -8,7 +8,7 @@
 
 ## 1. Product Overview
 
-MathQuest is an AI-powered educational SaaS web platform that uses gamification to improve mathematics learning for K–12 students. It is not a standalone game. It is a curriculum-aligned learning platform where gamification mechanics exist exclusively to motivate continued learning — never to distract from it.
+MathBattle is an AI-powered educational SaaS web platform that uses gamification to improve mathematics learning for K–12 students. It is not a standalone game. It is a curriculum-aligned learning platform where gamification mechanics exist exclusively to motivate continued learning — never to distract from it.
 
 The platform serves three user roles: **Students**, **Teachers**, and **Administrators**. Each role has a dedicated experience built around their specific goals.
 
